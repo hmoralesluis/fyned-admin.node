@@ -1,0 +1,101 @@
+<div class="hero">
+	<div class="container">
+		<div class="row">
+			<div class="hero-heading">
+				<a href="#"><img src="img/logo_medium_white.svg" alt="" style="height: 150px; padding-top:20px;"></a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="hero-heading">
+				Entrega de comida a domicilio.
+				<p>Busca tu platillo favorito. </p>
+			</div>
+		</div>
+		</br>
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6">
+				<form method="post" action="/search">
+					<div class="input-group input-group-lg">
+						<input type="text" class="form-control" name="search_input" placeholder="Que se te antoja hoy?...">
+						<span class="input-group-btn">
+							<input type="submit" class="btn btn-success" value="Encuentra platillos">
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+<div class="container section">
+	<h1>
+		Restaurantes en tu Area
+	</h1>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="gig-card">
+				<img src="/img/mcdonalds/mcdonalds.png" />
+				<h2>
+					Mc Donalds
+				</h2>
+				<h3>
+					Paseo de la reforma 345
+				</h3>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="gig-card">
+
+				<img src="/img/kfc/kfc.png" />
+				<h4>
+					KFC
+				</h4>
+				<h3>
+					Paseo de las rosas 345
+				</h3>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="gig-card">
+
+				<img src="/img/dominos/dominos.png" />
+				<h4>
+					Dominos Pizza
+				</h4>
+				<h3>
+					Santa Lucia 321
+				</h3>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="gig-card">
+
+				<img src="/img/tacobell/tacobell.jpg" />
+				<h4>
+					Tacobell
+				</h4>
+				<h3>
+					Pase de las garzas 854
+				</h3>
+			</div>
+		</div>
+		<h1>
+		Oferta de comidas
+	</h1>
+		{{#each gigs}}
+		<div class="col-md-3">
+			<div class="gig-card">
+				<a href="/service_detail/{{ _id }}"><img src="/img/mcdonalds/bigmac_menu.jpg" /></a>
+				<h4>
+					{{ title }}
+				</h4>
+				<h3>
+					${{price}}
+				</h3>
+			</div>
+		</div>
+		{{/each}}
+
+	</div>
+</div>
