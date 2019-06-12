@@ -39,7 +39,7 @@ router.route('/login')
 
   .get((req, res, next) => {
     if (req.user) return res.redirect('/');
-    res.render('accounts/login', { message: req.flash('loginMessage')});
+    res.render('accounts/login', { layout: 'layout-login', message: req.flash('loginMessage')});
   })
 
   .post(passport.authenticate('local-login', {
