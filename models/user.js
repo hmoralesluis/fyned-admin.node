@@ -5,18 +5,19 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true},
-  name: String,
+  username: String,
   password: String,
   photo: String,
   about: String,
-  facebookId: String,
-  googleId: String,
-  gigs: [{
-     type: Schema.Types.ObjectId, ref: 'Gig'
-  }],
-  cart: [{
-     type: Schema.Types.ObjectId, ref: 'Gig'
-  }],
+  rol: { type: Schema.Types.ObjectId, ref: 'Rol'}
+  // facebookId: String,
+  // googleId: String,
+  // gigs: [{
+  //    type: Schema.Types.ObjectId, ref: 'Gig'
+  // }],
+  // cart: [{
+  //    type: Schema.Types.ObjectId, ref: 'Gig'
+  // }],
 });
 
 UserSchema.pre('save', function(next) {
