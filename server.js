@@ -45,6 +45,12 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(function(req, res, next){
+  if (req.user) return next();
+  if(req.url == '/login') return next();
+  return res.redirect('/login');
+});
+
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express
   key:          'connect.sid',       // the name of the cookie where express/connect stores its session_id
@@ -73,12 +79,16 @@ require('./realtime/io')(io);
 
 const mainRoutes = require('./routes/main');
 const userRoutes = require('./routes/user')
+const usersRoutes = require('./routes/users')
 const orderRoutes = require('./routes/order');
 const apiRoutes = require('./api/api');
+const restaurantRoutes = require('./routes/restaurant');
 
 app.use(mainRoutes);
 app.use(userRoutes);
+app.use(usersRoutes);
 app.use(orderRoutes);
+app.use(restaurantRoutes);
 app.use('/api', apiRoutes);
 
 http.listen(config.port, (err) => {

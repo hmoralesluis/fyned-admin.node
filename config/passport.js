@@ -39,6 +39,8 @@ passport.use('local-login', new LocalStrategy({
     if (!user.comparePassword(password))
     return done(null, false, req.flash('loginMessage', 'Wrong password.')); // create the loginMessage and save it to session as flashdata
 
+    if (!user.enabled)
+    return done(null, false, req.flash('loginMessage', 'User inactive.')); // create the loginMessage and save it to session as flashdata
     // all is well, return successful user
     return done(null, user);
   });

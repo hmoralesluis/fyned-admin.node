@@ -1,3 +1,6 @@
+<script src="js/custom.js"></script>
+
+
 <!-- Js locales -->
 <script src="js/ela/jquery.min.js"></script>
 <script src="js/ela/popper.min.js"></script>
@@ -41,6 +44,24 @@
 <script>
     jQuery(document).ready(function($) {
         "use strict";
+
+        $('.deletebtn').on('click', function(){
+            var id = $(this).attr('id');
+            $('#hiddendelete').val(id);
+        });
+
+        $('.modaldeletebtn').on('click', function(){
+            var id = $('#hiddendelete').val();
+            var entity = $('#hiddendeleteentity').val();
+            $.ajax({
+              type: 'DELETE',
+              url: '/del'+entity+'/' + id,
+              success: function(response){
+                // alert(response.data);
+                window.location = entity;
+              }
+            });
+        });
 
         // Pie chart flotPie1
         var piedata = [

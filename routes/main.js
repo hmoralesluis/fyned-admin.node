@@ -2,6 +2,7 @@ const router = require('express').Router();
 const async = require('async');
 const Gig = require('../models/gig');
 const User = require('../models/user');
+const Rol = require('../models/rol');
 const Promocode = require('../models/promocode');
 
 const algoliasearch = require('algoliasearch');
@@ -12,6 +13,9 @@ router.get('/', (req, res, next) => {
     if (!req.user) return res.redirect('/login');
       res.render('main/home');
 });
+
+
+
 
 
 // router.route('/search')

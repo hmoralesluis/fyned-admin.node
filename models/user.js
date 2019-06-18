@@ -7,8 +7,11 @@ const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true},
   username: String,
   password: String,
-  photo: String,
-  about: String,
+  enabled: {type: Boolean, default: true},
+  // name: String,
+  // lastname: String,
+  // photo: String,
+  // about: String,
   rol: { type: Schema.Types.ObjectId, ref: 'Rol'}
   // facebookId: String,
   // googleId: String,
