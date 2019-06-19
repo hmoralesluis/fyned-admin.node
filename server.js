@@ -85,12 +85,14 @@ const usersRoutes = require('./routes/users')
 const orderRoutes = require('./routes/order');
 const apiRoutes = require('./api/api');
 const restaurantRoutes = require('./routes/restaurant');
+const gigRoutes = require('./routes/gig');
 
 app.use(mainRoutes);
 app.use(userRoutes);
 app.use(usersRoutes);
 app.use(orderRoutes);
 app.use(restaurantRoutes);
+app.use(gigRoutes);
 app.use('/api', apiRoutes);
 
 http.listen(config.port, (err) => {
