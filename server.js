@@ -47,11 +47,11 @@ app.use(function(req, res, next) {
 
 
 //Bloquear
-// app.use(function(req, res, next){
-//   if (req.user) return next();
-//   if(req.url == '/login') return next();
-//   return res.redirect('/login');
-// });
+app.use(function(req, res, next){
+  if (req.user) return next();
+  if(req.url == '/login') return next();
+  return res.redirect('/login');
+});
 
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express

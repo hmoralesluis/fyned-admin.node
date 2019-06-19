@@ -3,6 +3,16 @@ const passport = require('passport');
 const passportConfig = require('../config/passport');
 const User = require('../models/user');
 const Restaurant = require('../models/restaurant');
+const multer = require('multer');
+const fs = require("fs");
+const path = require("path");
+//This is the temp directory to store the uploads files
+const upload = multer({
+  dest: __dirname + '/../temp'
+});
+
+
+
 
 
 router.get('/restaurants', function(req, res, next) {
@@ -24,26 +34,44 @@ router.get('/addrest', function(req, res, next) {
 
 });
 
-router.post('/addrest', function(req, res, next){
+router.post('/addrest', upload.single('picture'), function(req, res, next){
 
-    Restaurant.findOne({name: req.body.name}, function(err, restaurant){
-      if(err) return next(err);
-      if(restaurant){
-        req.flash('addresterror', 'A restaurant with that name already exist');
-        req.flash('addrestname', req.body.name);
-        req.flash('addrestdir', req.body.dir);
-        return res.redirect('/addrest');
-      }else{
-        var restaurant = new Restaurant();
-        restaurant.name = req.body.name;
-        restaurant.direction = req.body.dir;
-        if(req.body.picture != '')
-        restaurant.picture = req.body.picture;
-        restaurant.save(function(err){
-          res.redirect('/restaurants');
-        });
+  Restaurant.findOne({name: req.body.name}, function(err, restaurant){
+    if(err) return next(err);
+    if(restaurant){
+      req.flash('addresterror', 'A restaurant with that name already exist');
+      req.flash('addrestname', req.body.name);
+      req.flash('addrestdir', req.body.dir);
+      return res.redirect('/addrest');
+    }else{
+      var restaurant = new Restaurant();
+      restaurant.name = req.body.name;
+      restaurant.direction = req.body.dir;
+      if(req.file){
+
+        var extension = path.extname(req.file.originalname).toLowerCase();
+
+        if(extension != '.jpg')
+        {
+          req.flash('addresterror', 'Only JPG pictures are allowed');
+          req.flash('addrestname', req.body.name);
+          req.flash('addrestdir', req.body.dir);
+          return res.redirect('/addrest');
+        }else{
+          const tempPath = req.file.path;
+          const targetPath = path.join(__dirname, "../public/images/uploads/"+restaurant._id+".jpg");
+          fs.rename(tempPath, targetPath, function(err){
+            if(err) return next(err);
+          });
+            restaurant.picture = restaurant._id+".jpg";
+        }
+
       }
-    });
+      restaurant.save(function(err){
+        return res.redirect('/restaurants');
+      });
+    }
+  });
 });
 
 router.get('/editrest/:id', function(req, res, next){
@@ -54,12 +82,11 @@ router.get('/editrest/:id', function(req, res, next){
   });
 });
 
-router.post('/editrest/:id', function(req, res, next){
-
-  console.log(req.params.id);
+router.post('/editrest/:id', upload.single('picture'), function(req, res, next){
 
     Restaurant.findOne({ name : req.body.name}).exec(function(err, restaurant){
       if(err) return next(err);
+
 
       if(restaurant){
         if(restaurant._id != req.params.id){
@@ -71,8 +98,24 @@ router.post('/editrest/:id', function(req, res, next){
       Restaurant.findOne({ _id : req.params.id}, function(err, restexist){
         restexist.name = req.body.name;
         restexist.direction = req.body.dir;
-        if(req.body.picture != '')
-          restexist.picture = req.body.picture;
+        if(req.file){
+
+          var extension = path.extname(req.file.originalname).toLowerCase();
+
+          if(extension != '.jpg')
+          {
+            req.flash('editresterror', 'Only JPG pictures are allowed');
+            return res.redirect('/editrest/'+ req.params.id);
+          }else{
+            const tempPath = req.file.path;
+            const targetPath = path.join(__dirname, "../public/images/uploads/"+restexist._id+".jpg");
+            fs.rename(tempPath, targetPath, function(err){
+              if(err) return next(err);
+            });
+              restexist.picture = restexist._id+".jpg";
+          }
+
+        }
 
         restexist.save(function(err){
           if(err) return next(err);
