@@ -68,3 +68,6 @@ temp/
 
 #exclude config file
 config/secrect.js
+
+#exclude change of css
+views/partials/css.hbs
