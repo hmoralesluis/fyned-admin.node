@@ -65,3 +65,6 @@ views/partials/css.hbs
 
 #exclude temp files
 temp/
+
+#exclude config file
+config/secrect.js
