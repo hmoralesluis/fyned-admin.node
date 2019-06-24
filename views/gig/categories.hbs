@@ -10,7 +10,7 @@
 
 <div class="row">
   <div style="margin-left: 95%">
-    <a class=" float-right btn btn-success" href="/addrest" role="button">Add</a>
+    <a class=" float-right btn btn-success" href="/addcategory" role="button">Add</a>
   </div>
 </div>
 
@@ -19,36 +19,25 @@
   <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <strong class="card-title">Restaurants</strong>
+            <strong class="card-title">Categories</strong>
         </div>
         <div class="table-stats order-table ov-h">
             <table class="table ">
                 <thead>
                     <tr>
                         <th class="serial">#</th>
-                        <th>Picture</th>
                         <th>Name</th>
-                        <th>Direction</th>
-                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{# each restaurants}}
+                    {{# each categories}}
                         <tr>
                           <td class="serial">{{@index}}</td>
-                          <td class="avatar">
-                              <div class="round-img">
-                                  <a href="#"><img class="rounded-circle" src="images/uploads/restaurant/{{picture}}" alt=""></a>
-                              </div>
-                          </td>
                           <td class="serial">{{name}}</td>
-                          <td class="serial">{{direction}}</td>
-                          <td class="serial">{{enabled}}</td>
                           <td>
-                              <a class="btn btn-primary" href="/editrest/{{_id}}" role="button"><i class="fa  fa-edit"></i></a>
+                              <a class="btn btn-primary" href="/editcategory/{{_id}}" role="button"><i class="fa  fa-edit"></i></a>
                               <button class="btn btn-danger deletebtn" href="#" role="button" data-toggle="modal" data-target="#deletemodal" id="{{_id}}"><i class="fa fa-trash-o"></i></button>
-                              <a class="btn btn-secondary" href="/disablerest/{{_id}}" role="button"><i class="fa fa-level-up"> <i class="fa fa-level-down"></i></i></a>
                           </td>
                         </tr>
                     {{/ each}}
@@ -59,7 +48,7 @@
   </div>
 </div>
 <input type="hidden" id="hiddendelete" value="" />
-<input type="hidden" id="hiddendeleteentity" value="restaurants" />
+<input type="hidden" id="hiddendeleteentity" value="categories" />
 <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="deletemodal" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

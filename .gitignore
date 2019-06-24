@@ -62,3 +62,6 @@ typings/
 
 #exclude the css file to always keep the interet one online
 views/partials/css.hbs
+
+#exclude temp files
+temp/

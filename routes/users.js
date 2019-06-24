@@ -7,6 +7,7 @@ const Promocode = require('../models/promocode');
 
 
 router.get('/users', function(req, res, next) {
+  if (!req.user) return res.redirect('/login');
   User
     .find({})
     .populate('rol')
@@ -20,6 +21,7 @@ router.get('/users', function(req, res, next) {
 });
 
 router.get('/adduser', function(req, res, next) {
+  if (!req.user) return res.redirect('/login');
   Rol.find({}, function(err, rolesexist){
     if(err) return next(err);
     res.render('users/adduser', {message: req.flash('addusererror'), username: req.flash('adduserusename'), email: req.flash('adduseremail'), roles: rolesexist});
@@ -28,6 +30,7 @@ router.get('/adduser', function(req, res, next) {
 });
 
 router.post('/adduser', function(req, res, next){
+  if (!req.user) return res.redirect('/login');
 
     var username = req.body.username;
     var email = req.body.email;
@@ -76,6 +79,7 @@ router.post('/adduser', function(req, res, next){
   });
 
   router.get('/edituser/:id', function(req, res, next){
+    if (!req.user) return res.redirect('/login');
 
       User.findById({ _id : req.params.id}).populate('rol').exec(function(err, user){
         if(err) return next(err);
@@ -86,6 +90,7 @@ router.post('/adduser', function(req, res, next){
   });
 
   router.post('/edituser/:id', function(req, res, next){
+    if (!req.user) return res.redirect('/login');
 
 
 
@@ -146,6 +151,7 @@ router.post('/adduser', function(req, res, next){
     });
 
     router.delete('/delusers/:id', function(req, res, next){
+      if (!req.user) return res.redirect('/login');
         User.findById({_id : req.params.id}, function(err, user){
             if(err) return next(err);
             user.remove();
@@ -156,6 +162,7 @@ router.post('/adduser', function(req, res, next){
 
 
     router.get('/disableuser/:id', function(req, res, next){
+      if (!req.user) return res.redirect('/login');
         User.findById({_id : req.params.id}, function(err, user){
           if(err) return next(err);
           var enabled = user.enabled;

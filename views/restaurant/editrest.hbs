@@ -14,14 +14,20 @@
                               <div class="form-group">
                                   <div class="input-group">
                                       <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{restedit.name}}" required>
-                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                      <div class="input-group-addon"><i class="fa fa-text-width"></i></div>
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <div class="input-group">
                                       <input type="text" id="dir" name="dir" placeholder="Direction" class="form-control" value="{{restedit.direction}}" required>
-                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                      <div class="input-group-addon"><i class="fa fa-arrow-circle-o-right"></i></div>
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <textarea name="description" id="description" rows="9" placeholder="Description" class="form-control">{{restedit.description}}</textarea>
                                   </div>
                               </div>
 
@@ -31,7 +37,7 @@
                                 </div>
                                 <div class="row form-group">
                                   <div class="col col-md-3">Current Picture</div>
-                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/{{restedit.picture}}'></div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture}}'></div>
                                 </div>
                                 <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
                             </form>

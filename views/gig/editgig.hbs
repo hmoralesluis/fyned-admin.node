@@ -14,20 +14,38 @@
                               <div class="form-group">
                                   <div class="input-group">
                                       <input type="text" id="title" name="title" placeholder="Title" class="form-control" value="{{gigedit.title}}" required>
-                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                      <div class="input-group-addon"><i class="fa fa-text-width"></i></div>
                                   </div>
                               </div>
-
                               <div class="form-group">
                                   <div class="input-group">
-                                      <input type="text" id="category" name="category" placeholder="Category" class="form-control" value="{{gigedit.category}}" required>
-                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                      <select name="restaurant" id="restaurant" class="form-control" required>
+                                        {{#each restaurants}}
+                                            <option value="{{name}}" selected>{{name}}</option>
+                                        {{/each}}
+                                      </select>
+                                    <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <select name="category" id="category" class="form-control" required>
+                                        {{#each categories}}
+                                            <option value="{{code}}" selected>{{name}}</option>
+                                        {{/each}}
+                                      </select>
+                                    <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
                                   </div>
                               </div>
                               <div class="form-group">
                                   <div class="input-group">
                                       <input type="number" id="price" name="price" placeholder="Price" class="form-control" value="{{gigedit.price}}" required>
-                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                      <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <textarea name="about" id="about" rows="9" placeholder="About" class="form-control">{{gigedit.about}}</textarea>
                                   </div>
                               </div>
 
@@ -38,7 +56,7 @@
 
                                 <div class="row form-group">
                                   <div class="col col-md-3">Current Picture</div>
-                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/{{gigedit.picture}}'></div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/gig/{{gigedit.picture}}'></div>
                                 </div>
                                 <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
                             </form>

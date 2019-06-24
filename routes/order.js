@@ -128,7 +128,7 @@ router.get('/users/:userId/orders/:orderId', (req, res, next) => {
     .populate('gig')
     .deepPopulate('messages.owner')
     .exec(function(err, order) {
-      console.log(order);
+      // console.log(order);
       res.render('order/order-room', { layout: 'chat_layout', order: order, helpers: {
         if_equals: function(a, b, opts) {
           if (a.equals(b)) {
@@ -157,7 +157,7 @@ router.get('/users/:id/orders', (req, res, next) => {
   .populate('seller')
   .populate('gig')
   .exec(function(err, orders) {
-    console.log(orders);
+    // console.log(orders);
     res.render('order/order-buyer', { orders: orders });
   });
 });

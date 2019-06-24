@@ -29,6 +29,7 @@
                         <th>Picture</th>
                         <th>User</th>
                         <th>Title</th>
+                        <th>Restaurant</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Created</th>
@@ -42,12 +43,13 @@
                           <td class="serial">{{@index}}</td>
                           <td class="avatar">
                               <div class="round-img">
-                                  <a href="#"><img class="rounded-circle" src="images/uploads/{{picture}}" alt=""></a>
+                                  <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture}}" alt=""></a>
                               </div>
                           </td>
                           <td class="serial">{{owner.username}}</td>
                           <td class="serial">{{title}}</td>
-                          <td class="serial">{{category}}</td>
+                          <td class="serial">{{restaurant.name}}</td>
+                          <td class="serial">{{category.name}}</td>
                           <td class="serial">{{price}}</td>
                           <td class="serial">{{created}}</td>
                           <td class="serial">{{enabled}}</td>
@@ -77,7 +79,7 @@
             </div>
             <div class="modal-body">
                 <p>
-                    This acction will delete permantely the User
+                    This acction will delete permantely the element
                 </p>
             </div>
             <div class="modal-footer">

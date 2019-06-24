@@ -8,6 +8,7 @@ var RestaurantSchema = new Schema({
    name: {type: String, unique: true },
    picture: {type: String, default: 'admin.jpg' },
    direction: String,
+   description: String,
    enabled: {type: Boolean, default: true},
 
 });

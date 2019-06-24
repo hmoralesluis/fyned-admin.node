@@ -46,12 +46,16 @@ app.use(function(req, res, next) {
 });
 
 
+
 //Bloquear
-app.use(function(req, res, next){
-  if (req.user) return next();
-  if(req.url == '/login') return next();
-  return res.redirect('/login');
-});
+// app.use(function(req, res, next){
+//   if (req.user) return next();
+//   if(req.url == '/login') return next();
+//   if(req.url == '/apigigs') return next();
+//   if(req.url == '/apirestaurants') return next();
+//   if(req.url == '/apirestaurantandgigs/:id') return next();
+//   return res.redirect('/login');
+// });
 
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,       // the same middleware you registrer in express
@@ -86,6 +90,7 @@ const orderRoutes = require('./routes/order');
 const apiRoutes = require('./api/api');
 const restaurantRoutes = require('./routes/restaurant');
 const gigRoutes = require('./routes/gig');
+const apiexternaRoutes = require('./routes/apiexterna');
 
 app.use(mainRoutes);
 app.use(userRoutes);
@@ -93,6 +98,7 @@ app.use(usersRoutes);
 app.use(orderRoutes);
 app.use(restaurantRoutes);
 app.use(gigRoutes);
+app.use(apiexternaRoutes);
 app.use('/api', apiRoutes);
 
 http.listen(config.port, (err) => {

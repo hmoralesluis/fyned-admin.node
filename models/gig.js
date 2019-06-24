@@ -4,8 +4,10 @@ const Schema = mongoose.Schema;
 
 const GigSchema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: 'User'},
+  restaurant: { type: Schema.Types.ObjectId, ref: 'Restaurant'},
   title: {type: String, unique: true},
-  category: String,
+  // category: String,
+  category: { type: Schema.Types.ObjectId, ref: 'Category'},
   about: String,
   price: Number,
   picture: { type: String, default: 'admin.jpg'},
