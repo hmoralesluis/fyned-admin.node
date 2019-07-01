@@ -37,7 +37,7 @@ router.get('/restaurants', function(req, res, next) {
 router.get('/addrest', function(req, res, next) {
   if (!req.user) return res.redirect('/login');
 
-  res.render('restaurant/addrest', {message: req.flash('addresterror'), restname: req.flash('addrestname'), restdesc: req.flash('addrestdir'), restdesc: req.flash('addrestdesc')});
+  res.render('restaurant/addrest', {message: req.flash('addresterror'), restname: req.flash('addrestname'), restdir: req.flash('addrestdir'), restlabel: req.flash('addrestlabel'), restdesc: req.flash('addrestdesc')});
 
 });
 
@@ -50,12 +50,14 @@ router.post('/addrest', upload.single('picture'), function(req, res, next){
       req.flash('addresterror', 'A restaurant with that name already exist');
       req.flash('addrestname', req.body.name);
       req.flash('addrestdir', req.body.dir);
+      req.flash('addrestlabel', req.body.label);
       req.flash('addrestdesc', req.body.description);
       return res.redirect('/addrest');
     }else{
       var restaurant = new Restaurant();
       restaurant.name = req.body.name;
       restaurant.direction = req.body.dir;
+      restaurant.label = req.body.label;
       restaurant.description = req.body.description;
       if(req.file){
 
@@ -66,6 +68,7 @@ router.post('/addrest', upload.single('picture'), function(req, res, next){
           req.flash('addresterror', 'Only JPG pictures are allowed');
           req.flash('addrestname', req.body.name);
           req.flash('addrestdir', req.body.dir);
+          req.flash('addrestlabel', req.body.label);
           req.flash('addrestdesc', req.body.description);
           return res.redirect('/addrest');
         }else{
@@ -82,10 +85,6 @@ router.post('/addrest', upload.single('picture'), function(req, res, next){
           fs.copyFile(tempPath, targetLocal, function(err){
             if(err) return next(err);
           });
-
-
-
-
 
             restaurant.picture = restaurant._id+".jpg";
         }
@@ -124,6 +123,7 @@ router.post('/editrest/:id', upload.single('picture'), function(req, res, next){
       Restaurant.findOne({ _id : req.params.id}, function(err, restexist){
         restexist.name = req.body.name;
         restexist.direction = req.body.dir;
+        restexist.label = req.body.label;
         restaurant.description = req.body.description;
         if(req.file){
 

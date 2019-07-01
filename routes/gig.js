@@ -41,7 +41,7 @@ if (!req.user) return res.redirect('/login');
    if(err) return next(err);
 
    Restaurant.find({}, function(err, restaurants){
-     res.render('gig/addgig', {message: req.flash('addgigerror'), gigtitle: req.flash('addgigtitle'), gigcategory : req.flash('addgigcategory'), gigprice : req.flash('addgigprice'), gigabout : req.flash('addgigabout'), categories: categories, restaurants: restaurants});
+     res.render('gig/addgig', {message: req.flash('addgigerror'), gigtitle: req.flash('addgigtitle'), gigcategory : req.flash('addgigcategory'), gigprice : req.flash('addgigprice'), gigoldprice : req.flash('addgigoldprice'),gigabout : req.flash('addgigabout'), gigdetails : req.flash('addgigdetails'), giglabel : req.flash('addgiglabel'),categories: categories, restaurants: restaurants});
    });
   });
 });
@@ -56,7 +56,10 @@ router.post('/addgig', upload.single('picture'), function(req, res, next){
       req.flash('addgigtitle', req.body.title);
       req.flash('addgigcategory', req.body.category);
       req.flash('addgigprice', req.body.price);
+      req.flash('addgigoldprice', req.body.oldprice);
       req.flash('addgigabout', req.body.about);
+      req.flash('addgigdetails', req.body.details);
+      req.flash('addgiglabel', req.body.label);
       return res.redirect('/addgig');
     }else{
 
@@ -78,7 +81,10 @@ router.post('/addgig', upload.single('picture'), function(req, res, next){
             gig.category = categoryexist._id;
             gig.restaurant = restaurantexist._id;
             gig.price = req.body.price;
+            gig.oldprice = req.body.oldprice;
             gig.about = req.body.about;
+            gig.details = req.body.details;
+            gig.label = req.body.label;
             if(req.file){
 
               var extension = path.extname(req.file.originalname).toLowerCase();
@@ -89,7 +95,10 @@ router.post('/addgig', upload.single('picture'), function(req, res, next){
                 req.flash('addgigtitle', req.body.title);
                 req.flash('addgigcategory', req.body.category);
                 req.flash('addgigprice', req.body.price);
+                req.flash('addgigoldprice', req.body.oldprice);
                 req.flash('addgigabout', req.body.about);
+                req.flash('addgigdetails', req.body.details);
+                req.flash('addgiglabel', req.body.label);
                 return res.redirect('/addgig');
               }else{
                 const tempPath = req.file.path;
@@ -156,7 +165,10 @@ router.post('/editgig/:id', upload.single('picture'), function(req, res, next){
             gigexist.restaurant = restaurantexist._id;
             gigexist.category = categoryexist._id;
             gigexist.price = req.body.price;
+            gigexist.oldprice = req.body.oldprice;
             gigexist.about = req.body.about;
+            gigexist.details = req.body.details;
+            gigexist.label = req.body.label;
             if(req.file){
 
               var extension = path.extname(req.file.originalname).toLowerCase();
