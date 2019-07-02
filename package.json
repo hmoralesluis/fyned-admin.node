@@ -18,6 +18,7 @@
     "express-flash": "0.0.2",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.2",
+    "handlebars-helpers": "^0.10.0",
     "hbs": "^4.0.1",
     "mongoose": "^4.9.4",
     "mongoose-algolia": "^1.6.0",

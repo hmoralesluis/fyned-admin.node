@@ -36,7 +36,7 @@
                 <tbody>
                     {{# each users}}
                         <tr>
-                          <td class="serial">{{@index}}</td>
+                          <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="serial">{{ username }}</td>
                           <td class="serial">{{email}}</td>
                           <td class="serial">{{rol.name}}</td>

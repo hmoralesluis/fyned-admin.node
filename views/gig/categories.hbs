@@ -33,7 +33,7 @@
                 <tbody>
                     {{# each categories}}
                         <tr>
-                          <td class="serial">{{@index}}</td>
+                          <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="serial">{{name}}</td>
                           <td>
                               <a class="btn btn-primary" href="/editcategory/{{_id}}" role="button"><i class="fa  fa-edit"></i></a>

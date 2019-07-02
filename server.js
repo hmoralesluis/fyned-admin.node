@@ -10,6 +10,7 @@ const flash = require('express-flash');
 const hbs = require('hbs');
 const expressHbs = require('express-handlebars');
 const passportSocketIo = require("passport.socketio");
+var helpers = require('handlebars-helpers')();
 
 const config = require('./config/secret');
 const sessionStore = new MongoStore({ url: config.database, autoReconnect: true });

@@ -42,7 +42,7 @@
                 <tbody>
                     {{# each gigs}}
                         <tr>
-                          <td class="serial">{{@index}}</td>
+                          <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="avatar">
                               <div class="round-img">
                                   <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture}}" alt=""></a>
