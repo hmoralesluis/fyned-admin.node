@@ -16,6 +16,7 @@ const GigSchema = new Schema({
   picture: { type: String, default: 'admin.jpg'},
   created: { type: Date, default: Date.now },
   enabled: {type: Boolean, default: true},
+  sugerencia: {type: Boolean, default: true},
 });
 
 // GigSchema.plugin(mongooseAlgolia,{

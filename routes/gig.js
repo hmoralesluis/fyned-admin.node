@@ -216,6 +216,19 @@ router.delete('/delgigs/:id', function(req, res, next){
     });
 });
 //
+
+router.get('/sugerenciagig/:id', function(req, res, next){
+    Gig.findById({_id : req.params.id}, function(err, gig){
+      if(err) return next(err);
+      var sugerencia = gig.sugerencia;
+      gig.sugerencia = !sugerencia;
+      gig.save(function(err){
+        if(err) return next(err);
+        req.flash('gigs', 'The Gig change the status');
+        return res.redirect('/gigs');
+      });
+    })
+});
 router.get('/disablegig/:id', function(req, res, next){
     Gig.findById({_id : req.params.id}, function(err, gig){
       if(err) return next(err);

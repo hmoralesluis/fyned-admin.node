@@ -5,6 +5,6 @@ module.exports = {
 database: process.env.DATABASE || 'mongodb://localhost/fyned_admin_dev_db',
   port: process.env.PORT || 3003,
   secret: process.env.SECRET || 'fiverclone2222',
-  upload_file: "../../../Front/Fyned.4/public/images/uploads/",
+  upload_file: "../../../Front/Fyned.6/public/images/uploads/",
 
 }

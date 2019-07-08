@@ -27,7 +27,7 @@
                     <tr>
                         <th class="serial">#</th>
                         <th>Picture</th>
-                        <th>User</th>
+                        <!-- <th>User</th> -->
                         <th>Title</th>
                         <th>Restaurant</th>
                         <th>Category</th>
@@ -35,6 +35,7 @@
                         <th>Old Price</th>
                         <th>Label</th>
                         <!-- <th>Created</th> -->
+                        <th>Sugerencia</th>
                         <th>Active</th>
                         <th>Actions</th>
                     </tr>
@@ -42,13 +43,13 @@
                 <tbody>
                     {{# each gigs}}
                         <tr>
-                          <td class="serial">{{@index}}</td>
+                          <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="avatar">
                               <div class="round-img">
                                   <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture}}" alt=""></a>
                               </div>
                           </td>
-                          <td class="serial">{{owner.username}}</td>
+                          <!-- <td class="serial">{{owner.username}}</td> -->
                           <td class="serial">{{title}}</td>
                           <td class="serial">{{restaurant.name}}</td>
                           <td class="serial">{{category.name}}</td>
@@ -56,10 +57,12 @@
                           <td class="serial">{{oldprice}}</td>
                           <td class="serial">{{label}}</td>
                           <!-- <td class="serial">{{created}}</td> -->
+                          <td class="serial">{{sugerencia}}</td>
                           <td class="serial">{{enabled}}</td>
                           <td>
                               <a class="btn btn-primary" href="/editgig/{{_id}}" role="button"><i class="fa  fa-edit"></i></a>
                               <button class="btn btn-danger deletebtn" href="#" role="button" data-toggle="modal" data-target="#deletemodal" id="{{_id}}"><i class="fa fa-trash-o"></i></button>
+                              <a class="btn btn-secondary" href="/sugerenciagig/{{_id}}" role="button">Sug.</a>
                               <a class="btn btn-secondary" href="/disablegig/{{_id}}" role="button"><i class="fa fa-level-up"> <i class="fa fa-level-down"></i></i></a>
                           </td>
                         </tr>
