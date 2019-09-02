@@ -5,6 +5,8 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const config = require('./secret');
 const User = require('../models/user');
+const Rol = require('../models/rol');
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -40,9 +42,11 @@ passport.use('local-login', new LocalStrategy({
     return done(null, false, req.flash('loginMessage', 'Wrong password.')); // create the loginMessage and save it to session as flashdata
 
     if (!user.enabled)
-    return done(null, false, req.flash('loginMessage', 'User inactive.')); // create the loginMessage and save it to session as flashdata
+    return done(null, false, req.flash('loginMessage', 'User inactive.')); // create the loginMessage and save it to session as flashdata   
+
+
     // all is well, return successful user
-    return done(null, user);
+    return done(null, user);  
   });
 
 }));

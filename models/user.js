@@ -1,13 +1,15 @@
 const bcrypt = require('bcrypt-nodejs');
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema; 
+
 
 const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true},
   username: String,
   password: String,
   enabled: {type: Boolean, default: true},
+  admin: { type: Boolean, default: false },
   // name: String,
   // lastname: String,
   // photo: String,
@@ -43,6 +45,7 @@ UserSchema.methods.comparePassword = function(password) {
 
     return bcrypt.compareSync(password, this.password);
 };
+   
 
 UserSchema.methods.gravatar = function(size) {
   if (!size) size = 200;

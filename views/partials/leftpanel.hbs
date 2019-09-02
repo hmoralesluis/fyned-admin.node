@@ -6,16 +6,25 @@
                     <a href="#"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                 </li>
                 <li class="menu-title">Data</li><!-- /.menu-title -->
-                <li>
-                  <a href="/users"><i class="menu-icon fa fa-group"></i>Users</a>
-                </li>
+                {{!-- <li>
+                  <a href="/users"><i class="menu-icon fa fa-group"></i>Usuarios</a>
+                </li> --}}
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>Gigs</a>
-                    <ul class="sub-menu children dropdown-menu"><li><i class="fa fa-puzzle-piece"></i><a href="/gigs">Gig</a></li>
-                        <li><i class="fa fa-id-badge"></i><a href="/categories">Category</a></li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>Usuario</a>
+                    <ul class="sub-menu children dropdown-menu"><li><i class="fa fa-puzzle-piece"></i><a href="/usersadmin">Sistema</a></li>
+                        <li><i class="fa fa-id-badge"></i><a href="/usersregular">App</a></li>
                     </ul>
                 </li>
-                <li><a href="/restaurants"><i class="menu-icon fa fa-cutlery"></i>Restaurants</a></li>
+                <li>
+                  <a href="/gigs"><i class="menu-icon fa fa-group"></i>Platos</a>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-archive"></i>Restaurantes</a>
+                    <ul class="sub-menu children dropdown-menu"><li><i class="fa fa-puzzle-piece"></i><a href="/restaurants">Restaurante</a></li>
+                        <li><i class="fa fa-id-badge"></i><a href="/categories">Categorias</a></li>
+                    </ul>
+                </li>
+                {{!-- <li><a href="/restaurants"><i class="menu-icon fa fa-cutlery"></i>Restaurants</a></li> --}}
 
 
             </ul>

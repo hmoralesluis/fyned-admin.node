@@ -26,12 +26,14 @@
                 <thead>
                     <tr>
                         <th class="serial">#</th>
-                        <th>Picture</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Label</th>
-                        <th>Active</th>
-                        <th>Actions</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Direccion</th>
+                        <th>Estado</th>
+                        <th>Etiqueta</th>
+                        <th>Activado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,11 +42,15 @@
                           <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="avatar">
                               <div class="round-img">
-                                  <a href="#"><img class="rounded-circle" src="images/uploads/restaurant/{{picture}}" alt=""></a>
+                                  <img class="rounded-circle" src="images/uploads/restaurant/{{picture1}}" alt="">
+                                  <img class="rounded-circle" src="images/uploads/restaurant/{{picture2}}" alt="">
+                                  <img class="rounded-circle" src="images/uploads/restaurant/{{picture3}}" alt="">
                               </div>
                           </td>
                           <td class="serial">{{name}}</td>
+                          <td class="serial">{{category.name}}</td>
                           <td class="serial">{{direction}}</td>
+                          <td class="serial">{{estado}}</td>
                           <td class="serial">{{label}}</td>
                           <td class="serial">{{enabled}}</td>
                           <td>

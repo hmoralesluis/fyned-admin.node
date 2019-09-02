@@ -1,6 +1,6 @@
 <div class="col-lg-6 offset-lg-3">
                     <div class="card">
-                        <div class="card-header">New Category</div>
+                        <div class="card-header">Nueva categoria</div>
                         <div class="card-body card-block">
                           {{#if message}}
                               <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
@@ -11,12 +11,16 @@
                                     </button>
                                 </div>
                             {{/if}}
-                            <form method="post" class="">
+                            <form method="post" class="" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="{{categoryname}}" required>
+                                        <input type="text" id="name" name="name" placeholder="Nombre" class="form-control" value="{{gigtitle}}" required>
                                         <div class="input-group-addon"><i class="fa fa-text-width"></i></div>
                                     </div>
+                                </div>                                
+                                <div class="row form-group">
+                                    <div class="col col-md-3"><label for="picture" class=" form-control-label">Imagen</label></div>
+                                    <div class="col-12 col-md-9"><input type="file" id="picture" name="picture" class="form-control-file"></div>
                                 </div>
                                 <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
                             </form>

@@ -6,7 +6,11 @@ const Schema = mongoose.Schema;
 var RestaurantSchema = new Schema({
 
    name: {type: String, unique: true },
-   picture: {type: String, default: 'admin.jpg' },
+   category: { type: Schema.Types.ObjectId, ref: 'Category'},
+   picture1: {type: String, default: 'admin.jpg' },
+   picture2: {type: String, default: 'admin.jpg' },
+   picture3: {type: String, default: 'admin.jpg' },
+   estado: String,
    direction: String,
    label: String,
    description: String,

@@ -30,7 +30,7 @@
                         <!-- <th>User</th> -->
                         <th>Title</th>
                         <th>Restaurant</th>
-                        <th>Category</th>
+                        {{!-- <th>Category</th> --}}
                         <th>Price</th>
                         <th>Old Price</th>
                         <th>Label</th>
@@ -46,13 +46,15 @@
                           <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="avatar">
                               <div class="round-img">
-                                  <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture}}" alt=""></a>
+                                  <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture1}}" alt=""></a>
+                                  <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture2}}" alt=""></a>
+                                  <a href="#"><img class="rounded-circle" src="images/uploads/gig/{{picture3}}" alt=""></a>
                               </div>
                           </td>
                           <!-- <td class="serial">{{owner.username}}</td> -->
                           <td class="serial">{{title}}</td>
                           <td class="serial">{{restaurant.name}}</td>
-                          <td class="serial">{{category.name}}</td>
+                          {{!-- <td class="serial">{{category.name}}</td> --}}
                           <td class="serial">{{price}}</td>
                           <td class="serial">{{oldprice}}</td>
                           <td class="serial">{{label}}</td>

@@ -3,8 +3,56 @@ const Gig = require('../models/gig');
 const Category = require('../models/category');
 const Restaurant = require('../models/restaurant');
 const Cart = require('../models/cart');
+const OrderCart = require('../models/ordercart');
+const User = require('../models/user');
 const LovedRestaurant = require('../models/lovedrestaurant');
-const LovedGig = require('../models/lovedgig')
+const LovedGig = require('../models/lovedgig');
+const Rol = require('../models/rol');
+
+
+// begin Datos de usuarios
+  router.get('/apiuserbyemail/:email', function(req, res, next){
+    const email = req.params.email;
+    User.findOne({email: email}, function(err, userexist){
+      if(err) return next(err);
+      if(userexist)
+        res.json({res: true});
+      else
+        res.json({res: false});      
+    });
+  });
+
+
+  router.get('/adduserexterno/:name/:email/:pass', function(req, res, next){
+    Rol.findOne({code: 'regular'}, function(err, rol){
+      var user = new User();
+      user.username = req.params.name;
+      user.email = req.params.email;
+      user.password = req.params.pass;  
+      user.rol = rol.id;  
+      user.save();    
+      res.json({res: user._id});
+    });
+  });
+
+
+  router.get('/apicanlogintheuser/:email/:pass', function(req, res, next){
+    User.findOne({email: req.params.email}, function(err, user){
+      if(err) return next(err);
+      if(user){
+        if(user.comparePassword(req.params.pass))
+          res.json({res: user._id});
+        else
+          res.json({res: false});  
+      }else{
+        res.json({res: false}); 
+      }
+    });
+  });
+
+// end Datos de usuarios
+
+
 
 router.get('/apigigs', function(req, res, next) {
   Gig
@@ -73,7 +121,7 @@ router.get('/apirestaurants', function(req, res, next) {
 router.get('/apirestaurantandgigs/:id', function(req, res, next) {
 
   Restaurant
-    .find({enabled: true, _id : req.params.id})
+    .findOne({enabled: true, _id : req.params.id})
     .exec(function(err, restaurant) {
       if (err) return next(err);
       Gig.find({enabled: true, restaurant: req.params.id}, function(err, gigs){
@@ -106,16 +154,15 @@ router.get('/apiaddgigtocart/:iduser/:idgig/:quantity', function(req, res, next)
 
   Cart.findOne({ owner: iduser }, function(err, cart) {
     if(err) return next(err);
-    Gig.findById({_id: req.params.idgig}, function(err, gig){
+    Gig.findById({_id: idgig}, function(err, gig){
       if(err) return next(err);
       cart.items.unshift({
         item: gig._id,
         price: parseFloat(gig.price),
         title: gig.title,
-        picture: gig.picture,
+        picture: gig.picture1,
         quantity: parseInt(req.params.quantity)
       });
-
 
       cart.total = cart.total + (gig.price * quantity);
       // console.log('el valor es ' +cart.total);
@@ -138,6 +185,113 @@ router.get('/apigetcartbyuserid/:iduser', function(req, res, next){
     });
 });
 
+/**
+ * Funcion para modificar la cantidad de uno de los elementos del carro
+ * Parameters Id usuario, Id del item y la nueva cantidad
+ * Return true o false
+ */
+
+router.get('/apimodifyitemqtyfromcart/:iduser/:iditem/:qty', function(req, res, next){
+  Cart.findOne({owner : req.params.iduser}, function(err, cart){
+    if(err) return next(err);
+    if(!cart){
+      res.json({res: false});
+    }else{      
+      let large = cart.items.length;
+      for(let i = 0; i < large; i++) {        
+        if(cart.items[i]._id == req.params.iditem) {
+          cart.total -= cart.items[i].quantity * cart.items[i].price;
+          cart.items[i].quantity = req.params.qty;
+          cart.total += cart.items[i].quantity * cart.items[i].price;
+          cart.save();
+          break;
+        }
+      }
+      res.json({res: true});
+    }
+  });  
+});
+
+/**
+ * Funcion para elimiar una solicitud de compra en el carro
+ * Parameters Id usuario, Id del item 
+ * Return true o false
+ */
+
+ router.get('/apidelorderfromcart/:iduser/:iditem', function(req, res, next){
+    Cart.findOne({owner : req.params.iduser}, function(err, cart){
+      if(err) return next(err);
+      if(!cart){
+        res.json({res: false});
+      }else{ 
+        let large = cart.items.length;
+        for(let i = 0; i < large; i++) {        
+          if(cart.items[i]._id == req.params.iditem) {
+            cart.total -= cart.items[i].quantity * cart.items[i].price;
+            break;
+          }
+        }
+        cart.items.pull(String(req.params.iditem));
+        cart.save();
+        res.json({res: true});
+      }
+    });
+ });
+
+ /**
+  * Funcion para crear una orden y limpiar los item del carro
+  * Params id usuario,
+  */
+
+  router.get('/apicreateorderbyuserid/:iduser', function(req, res, next){
+    Cart.findOne({owner : req.params.iduser}, function(err, cart){
+        if(err) return next(err);
+        if(!cart) {
+          res.json({res: false});
+        }else {
+          var ordercart = new OrderCart();
+          ordercart.owner = cart.owner;
+          ordercart.total = cart.total;
+          let large = cart.items.length;
+          for(let i = 0; i < large; i++) {
+            ordercart.items.unshift({
+              _id: cart.items[i]._id,
+              item: cart.items[i].item,
+              quantity: cart.items[i].quantity,
+              price: cart.items[i].price,
+              title: cart.items[i].title,
+              picture: cart.items[i].picture
+            });
+          }
+          ordercart.save();
+          cart.items = [];
+          cart.total = 0;
+          cart.save();
+          // for(let i = 0; i < large; i++) {
+          //   cart.items.pull(String(cart.items[i]._id));
+          // }
+        }
+    });
+  });
+
+  /**
+   * Funcion para obtener las ordenes correspondientes a un usuario
+   * Params id usuario
+   * return false or user orders
+   */
+
+   router.get('/getordercartbyuserid/:userid', function(req, res, next){
+    OrderCart.find({owner: req.params.userid}, function(err, ordercart){
+      if(err) return next(err);
+      if(!ordercart){
+        res.json({res: false})
+      }else{
+        res.json({res: true, orders: ordercart});
+      }
+    });
+   });
+
+
 // End Cart
 
 
@@ -154,6 +308,9 @@ router.get('/apicreatelovedrestaurant/:iduser', function(req, res, next){
   });
 
 });
+
+
+
 
 router.get('/apiaddresttolovedrest/:iduser/:idrest/', function(req, res, next){
 
@@ -177,7 +334,7 @@ router.get('/apiaddresttolovedrest/:iduser/:idrest/', function(req, res, next){
       lovedrest.items.unshift({
         item: restaurant._id,
         name: restaurant.name,
-        picture: restaurant.picture,
+        picture: restaurant.picture1,
       });
 
       lovedrest.save(function(err) {
@@ -187,7 +344,7 @@ router.get('/apiaddresttolovedrest/:iduser/:idrest/', function(req, res, next){
           message: 1,
           item: restaurant._id,
           name: restaurant.name,
-          picture: restaurant.picture,
+          picture: restaurant.picture1,
         });
       });
     });
@@ -201,6 +358,7 @@ router.get('/apigetlovedrestbyuserid/:iduser', function(req, res, next){
         if(!lovedrest){
           res.json({lovedrest: 0});
         }else{
+          console.log('el valor del larog es ' + lovedrest.items.length);
           res.json({lovedrest: lovedrest});
         }
     });
@@ -255,7 +413,7 @@ router.get('/apiaddgigtolovedgig/:iduser/:idgig/', function(req, res, next){
       lovedgig.items.unshift({
         item: gig._id,
         title: gig.title,
-        picture: gig.picture,
+        picture: gig.picture1,
       });
 
       lovedgig.save(function(err) {
@@ -265,7 +423,7 @@ router.get('/apiaddgigtolovedgig/:iduser/:idgig/', function(req, res, next){
           message: 1,
           item: gig._id,
           title: gig.title,
-          picture: gig.picture,
+          picture: gig.picture1,
         });
       });
     });

@@ -27,6 +27,7 @@
                     <tr>
                         <th class="serial">#</th>
                         <th>Name</th>
+                        <th>Imagen</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -35,6 +36,11 @@
                         <tr>
                           <td class="serial">{{#add @index 1}}{{/add}}</td>
                           <td class="serial">{{name}}</td>
+                          <td class="avatar">
+                              <div class="round-img">
+                                  <a href="#"><img class="rounded-circle" src="images/uploads/category/{{picture}}" alt=""></a>                                  
+                              </div>
+                          </td>
                           <td>
                               <a class="btn btn-primary" href="/editcategory/{{_id}}" role="button"><i class="fa  fa-edit"></i></a>
                               <button class="btn btn-danger deletebtn" href="#" role="button" data-toggle="modal" data-target="#deletemodal" id="{{_id}}"><i class="fa fa-trash-o"></i></button>

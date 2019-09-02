@@ -1,24 +1,65 @@
 const router = require('express').Router();
 const async = require('async');
-const Gig = require('../models/gig');
+// const Gig = require('../models/gig');
 const User = require('../models/user');
 const Rol = require('../models/rol');
-const Promocode = require('../models/promocode');
+const Cart = require('../models/cart');
+const LovedGig = require('../models/lovedgig');
+const LovedRestaurant = require('../models/lovedrestaurant');
+// const Promocode = require('../models/promocode');
 
 
-router.get('/users', function(req, res, next) {
+router.get('/usersadmin', function(req, res, next) {
   if (!req.user) return res.redirect('/login');
-  User
-    .find({})
-    .populate('rol')
-    .exec(function(err, users) {
-      if (err) return next(err);
-      res.render('users/users', {
-        users: users,
-        message: req.flash('users')
-      });
-    });
+  Rol.findOne({code: 'admin'}, function(err, rol){
+    if(err) return next(err);
+    if(rol){
+      User
+        .find({rol: rol._id})
+        .populate('rol')
+        .exec(function(err, users) {
+          if (err) return next(err);
+          res.render('users/users', {
+            users: users,
+            message: req.flash('users')
+          });
+        });
+    }
+  });
 });
+
+router.get('/usersregular', function(req, res, next) {
+  if (!req.user) return res.redirect('/login');
+  Rol.findOne({code: 'regular'}, function(err, rol){
+    if(err) return next(err);
+    if(rol){
+      User
+        .find({rol: rol._id})
+        .populate('rol')
+        .exec(function(err, users) {
+          if (err) return next(err);
+          res.render('users/users', {
+            users: users,
+            message: req.flash('users')
+          });
+        });
+    }
+  });
+});
+
+// router.get('/usersreg', function(req, res, next) {
+//   if (!req.user) return res.redirect('/login');
+//   User
+//     .find({})
+//     .populate('rol')
+//     .exec(function(err, users) {
+//       if (err) return next(err);
+//       res.render('users/users', {
+//         users: users,
+//         message: req.flash('users')
+//       });
+//     });
+// });
 
 router.get('/adduser', function(req, res, next) {
   if (!req.user) return res.redirect('/login');
@@ -69,7 +110,23 @@ router.post('/adduser', function(req, res, next){
                   user.password = password;
                   user.rol = rolexist;
                   user.save();
-                  return res.redirect('/users');
+
+                  cart = new Cart();
+                  cart.owner = user._id;
+                  cart.save();
+
+                  lovedgig = new LovedGig();
+                  lovedgig.owner = user._id;
+                  lovedgig.save();
+
+                  lovedrestaurant = new LovedRestaurant();
+                  lovedrestaurant.owner = user._id;
+                  lovedrestaurant.save();
+
+                  if(rolexist.code == 'admin')
+                    return res.redirect('/usersadmin');
+                  if(rolexist.code == 'regular')
+                    return res.redirect('/usersregular');  
                 }
               });
             }
@@ -91,9 +148,6 @@ router.post('/adduser', function(req, res, next){
 
   router.post('/edituser/:id', function(req, res, next){
     if (!req.user) return res.redirect('/login');
-
-
-
       var userid = req.params.id;
       var username = req.body.username;
       var email = req.body.email;
@@ -141,7 +195,10 @@ router.post('/adduser', function(req, res, next){
                 user.save(function(err){
                   if(err) return next(err);
                   req.flash('users', 'The user have been updated');
-                  return res.redirect('/users');
+                  if(rolexist.code == 'admin')
+                    return res.redirect('/usersadmin');
+                  if(rolexist.code == 'regular')
+                    return res.redirect('/usersregular'); 
                 });
               });
             });
@@ -154,6 +211,24 @@ router.post('/adduser', function(req, res, next){
       if (!req.user) return res.redirect('/login');
         User.findById({_id : req.params.id}, function(err, user){
             if(err) return next(err);
+            Cart.findOne({owner: req.params.id}, function(err, item){
+              if(err) return next(err);
+              if(item){
+                item.remove();
+              }              
+            });
+            LovedGig.findOne({owner: req.params.id}, function(err, item){
+              if(err) return next(err);
+              if(item){
+                item.remove();
+              }              
+            });
+            LovedRestaurant.findOne({owner: req.params.id}, function(err, item){
+              if(err) return next(err);
+              if(item){
+                item.remove();
+              }              
+            });
             user.remove();
             req.flash('users', 'The user have been deleted');
             res.json({data: 'Deleted'});

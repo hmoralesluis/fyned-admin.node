@@ -17,13 +17,31 @@
                                       <div class="input-group-addon"><i class="fa fa-text-width"></i></div>
                                   </div>
                               </div>
-
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <select name="category" id="category" class="form-control" required>
+                                        {{#each categories}}
+                                            <option value="{{code}}" selected>{{name}}</option>
+                                        {{/each}}
+                                      </select>
+                                    <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
+                                  </div>
+                              </div>
                               <div class="form-group">
                                   <div class="input-group">
                                       <input type="text" id="dir" name="dir" placeholder="Address" class="form-control" value="{{restedit.direction}}" required>
                                       <div class="input-group-addon"><i class="fa fa-arrow-circle-o-right"></i></div>
                                   </div>
                               </div>
+                              <div class="form-group">
+                                    <div class="input-group">
+                                        <select name="estado" id="estado" class="form-control" required>                
+                                              <option value="abierto" selected>Abierto</option>                                          
+                                              <option value="cerrado" >Cerrado</option>
+                                        </select>
+                                      <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
+                                    </div>
+                                </div>
 
                               <div class="form-group">
                                   <div class="input-group">
@@ -39,12 +57,15 @@
                               </div>
 
                                 <div class="row form-group">
-                                    <div class="col col-md-3"><label for="picture" class=" form-control-label">File input</label></div>
-                                    <div class="col-12 col-md-6"><input type="file" id="picture" name="picture" class="form-control-file"></div>
+                                    <div class="col col-md-3"><label for="picture" class=" form-control-label">Pictures (3 Max)</label></div>
+                                    <div class="col-12 col-md-6"><input type="file" id="picture" name="picture" class="form-control-file" multiple></div>
                                 </div>
+                                <hr>
                                 <div class="row form-group">
-                                  <div class="col col-md-3">Current Picture</div>
-                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture}}'></div>
+                                  <div class="col col-md-3">Current Pictures</div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture1}}'></div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture2}}'></div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture3}}'></div>
                                 </div>
                                 <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
                             </form>

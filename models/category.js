@@ -6,6 +6,7 @@ var CategorySchema = new Schema({
 
   code: {type: String, unique: true, lowercase: true},
   name: String,
+  picture: String,
   
 });
 
