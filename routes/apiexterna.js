@@ -74,6 +74,17 @@ router.get('/apigig/:id', function(req, res, next) {
     });
 });
 
+
+router.get('/apigigssugerencia', function(req, res, next) {
+  Gig
+    .find({enabled: true, sugerencia: true})
+    // .populate('owner')
+    .exec(function(err, gigs) {
+      if (err) return next(err);
+      res.json({gigs: gigs});
+    });
+});
+
 router.get('/apigigfromthesamerest/:id', function(req, res, next) {
   Gig
     .findById({_id: req.params.id})
@@ -243,7 +254,7 @@ router.get('/apimodifyitemqtyfromcart/:iduser/:iditem/:qty', function(req, res, 
   * Params id usuario,
   */
 
-  router.get('/apicreateorderbyuserid/:iduser', function(req, res, next){
+  router.get('/apicreateorderbyuserid/:iduser', function(req, res, next){    
     Cart.findOne({owner : req.params.iduser}, function(err, cart){
         if(err) return next(err);
         if(!cart) {
