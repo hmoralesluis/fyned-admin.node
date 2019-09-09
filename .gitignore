@@ -67,7 +67,7 @@ views/partials/css.hbs
 temp/
 
 #exclude config file
-config
+config/secret.js
 
 #exclude change of css
 views/partials/css.hbs
