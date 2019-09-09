@@ -10,7 +10,11 @@ var OrderCartSchema = new Schema({
     price: { type: Number, default: 0},
     title: String, 
     picture: { type: String, default: ''},
-  }]
+  }],
+  created: { type: Date, default: Date.now },
+  progreso: {type: Number, default: 0},
+  estado: {type: String, default: 'Creada'},
+  atendida: {type: Boolean, default: false}
 });
 
 

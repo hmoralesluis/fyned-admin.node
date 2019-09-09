@@ -10,6 +10,11 @@ const LovedGig = require('../models/lovedgig');
 const Rol = require('../models/rol');
 
 
+router.post('/apitest', function(req, res, next){
+  console.log('el valor es ' + req.body.todo);
+  res.json({message: 'ok '});
+});
+
 // begin Datos de usuarios
   router.get('/apiuserbyemail/:email', function(req, res, next){
     const email = req.params.email;
@@ -71,6 +76,17 @@ router.get('/apigig/:id', function(req, res, next) {
     .exec(function(err, gig) {
       if (err) return next(err);
       res.json({gig: gig});
+    });
+});
+
+
+router.get('/apigigssugerencia', function(req, res, next) {
+  Gig
+    .find({enabled: true, sugerencia: true})
+    // .populate('owner')
+    .exec(function(err, gigs) {
+      if (err) return next(err);
+      res.json({gigs: gigs});
     });
 });
 
@@ -243,7 +259,7 @@ router.get('/apimodifyitemqtyfromcart/:iduser/:iditem/:qty', function(req, res, 
   * Params id usuario,
   */
 
-  router.get('/apicreateorderbyuserid/:iduser', function(req, res, next){
+  router.get('/apicreateorderbyuserid/:iduser', function(req, res, next){    
     Cart.findOne({owner : req.params.iduser}, function(err, cart){
         if(err) return next(err);
         if(!cart) {
@@ -287,6 +303,23 @@ router.get('/apimodifyitemqtyfromcart/:iduser/:iditem/:qty', function(req, res, 
         res.json({res: false})
       }else{
         res.json({res: true, orders: ordercart});
+      }
+    });
+   });
+
+  /**
+   * Funcion para obtener los datos de una orden por el id de la misma
+   * Params id orden
+   * return false or order
+   */ 
+
+  router.get('/getordercartbyid/:orderid', function(req, res, next){
+    OrderCart.findById({_id: req.params.orderid}, function(err, ordercart){
+      if(err) return next(err);
+      if(!ordercart){
+        res.json({res: false})
+      }else{
+        res.json({res: true, order: ordercart});
       }
     });
    });

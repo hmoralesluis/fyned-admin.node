@@ -57,8 +57,15 @@
               type: 'DELETE',
               url: '/del'+entity+'/' + id,
               success: function(response){
-                // alert(response.data);
-                window.location = entity;
+                  if(entity == 'users'){                    
+                    if(response.data == 'admin')
+                        window.location = 'usersadmin';
+                    else
+                        window.location = 'usersregular';
+                  }else{
+                    window.location = entity;
+                  }
+                
               }
             });
         });

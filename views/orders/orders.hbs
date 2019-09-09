@@ -1,0 +1,83 @@
+
+{{#if message}}
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+              {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  {{/if}}
+
+{{!-- <div class="row">
+  <div style="margin-left: 95%">
+    <a class=" float-right btn btn-success" href="/addgig" role="button">Add</a>
+  </div>
+</div> --}}
+
+<br>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Ordenes</strong>
+        </div>
+        <div class="table-stats order-table ov-h">
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th class="serial">#</th>
+                        <th># Orden</th>
+                        <!-- <th>User</th> -->
+                        <th>Usuario</th>
+                        <th>Total</th>
+                        {{!-- <th>Category</th> --}}
+                        <th>Fecha</th>
+                        <th>Estado</th>    
+                        <th>Acciones</th>                     
+                    </tr>
+                </thead>
+                <tbody>
+                    {{# each orders}}
+                        <tr>
+                          <td class="serial">{{#add @index 1}}{{/add}}</td>
+                          <td class="serial">
+                              {{_id}}
+                          </td>
+                          <td class="serial">{{owner.username}}</td>
+                          <td class="serial">{{total}}</td>
+                          <td class="serial">{{created}}</td>
+                          <td class="serial">{{estado}}</td>                          
+                          <td>                              
+                              <a class="btn btn-secondary" href="/changestatus/{{_id}}" role="button"><i class="fa fa-level-up"> <i class="fa fa-level-down"></i></i></a>
+                          </td>
+                        </tr>
+                    {{/ each}}
+                </tbody>
+            </table>
+        </div> <!-- /.table-stats -->
+    </div>
+  </div>
+</div>
+{{!-- <input type="hidden" id="hiddendelete" value="" />
+<input type="hidden" id="hiddendeleteentity" value="gigs" />
+<div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="deletemodal" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="smallmodalLabel">Are you sure?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    This acction will delete permantely the element
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger modaldeletebtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div> --}}

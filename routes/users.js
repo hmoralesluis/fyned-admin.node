@@ -229,9 +229,13 @@ router.post('/adduser', function(req, res, next){
                 item.remove();
               }              
             });
-            user.remove();
-            req.flash('users', 'The user have been deleted');
-            res.json({data: 'Deleted'});
+            Rol.findById({_id: user.rol}, function(err, rol){
+              if(err) return next(err);
+              let roluser = rol.code;
+              user.remove();
+              req.flash('users', 'The user have been deleted');
+              res.json({data: roluser});
+            })
         });
     });
 
@@ -245,7 +249,13 @@ router.post('/adduser', function(req, res, next){
           user.save(function(err){
             if(err) return next(err);
             req.flash('users', 'The user change the status');
-            return res.redirect('/users');
+            Rol.findById({_id: user.rol}, function(err, rol){
+                let rolexist = rol;
+                if(rolexist.code == 'admin')
+                  return res.redirect('/usersadmin');
+                if(rolexist.code == 'regular')
+                  return res.redirect('/usersregular')
+            });           
           });
         })
     });
