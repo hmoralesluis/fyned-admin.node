@@ -8,12 +8,30 @@ const User = require('../models/user');
 const LovedRestaurant = require('../models/lovedrestaurant');
 const LovedGig = require('../models/lovedgig');
 const Rol = require('../models/rol');
+const Notification = require('../models/notification');
 
 
 router.post('/apitest', function(req, res, next){
   console.log('el valor es ' + req.body.todo);
   res.json({message: 'ok '});
 });
+
+function createNotification(message) {
+  Rol.findOne({code: 'admin'}, function(err, roladmin){
+    if(err) return next(err);
+    User.find({rol: roladmin._id}, function(err, users){
+      if(err) return next(err);
+      let largo = users.length;
+      for(let i = 0; i < largo; i++){
+        let notification = new Notification();
+        notification.owner = users[i]._id;
+        notification.content = message;
+        notification.save();
+      }
+      
+    });
+  });
+}
 
 // begin Datos de usuarios
   router.get('/apiuserbyemail/:email', function(req, res, next){
@@ -30,13 +48,16 @@ router.post('/apitest', function(req, res, next){
 
   router.get('/adduserexterno/:name/:email/:pass', function(req, res, next){
     Rol.findOne({code: 'regular'}, function(err, rol){
+      if(err) return next(err);
       var user = new User();
       user.username = req.params.name;
       user.email = req.params.email;
       user.password = req.params.pass;  
       user.rol = rol.id;  
-      user.save();    
-      res.json({res: user._id});
+      user.save();
+      //Create the notifications related to this topic for the admin users.
+      createNotification('Se registro un nuevo usuario');
+      res.json({res: user._id});            
     });
   });
 
@@ -283,9 +304,10 @@ router.get('/apimodifyitemqtyfromcart/:iduser/:iditem/:qty', function(req, res, 
           cart.items = [];
           cart.total = 0;
           cart.save();
-          // for(let i = 0; i < large; i++) {
-          //   cart.items.pull(String(cart.items[i]._id));
-          // }
+          //Create the notifications related to this topic for the admin users.
+          createNotification('Se creo una nueva orden');
+          res.json({res: true});
+         
         }
     });
   });

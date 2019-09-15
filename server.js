@@ -11,6 +11,7 @@ const hbs = require('hbs');
 const expressHbs = require('express-handlebars');
 const passportSocketIo = require("passport.socketio");
 var helpers = require('handlebars-helpers')();
+var notifications = require('./middleware/notifications');
 
 const config = require('./config/secret');
 const sessionStore = new MongoStore({ url: config.database, autoReconnect: true });
@@ -45,6 +46,7 @@ app.use(function(req, res, next) {
   res.locals.user = req.user;
   next();
 });
+app.use(notifications);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

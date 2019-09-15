@@ -4,13 +4,14 @@ const Gig = require('../models/gig');
 const User = require('../models/user');
 const Rol = require('../models/rol');
 const Promocode = require('../models/promocode');
+const Notification = require('../models/notification');
 
 const algoliasearch = require('algoliasearch');
 var client = algoliasearch("L3E3RMHJBU", "f5a7555c009dfcabf7e108808f1ff931");
 var index = client.initIndex('GigSchema');
 
 router.get('/', (req, res, next) => {
-    if (!req.user) return res.redirect('/login');
+    if (!req.user) return res.redirect('/login'); 
       res.render('main/home');
 });
 
