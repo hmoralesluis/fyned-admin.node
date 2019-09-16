@@ -61,13 +61,37 @@
                     if(response.data == 'admin')
                         window.location = 'usersadmin';
                     else
-                        window.location = 'usersregular';
+                        if(response.data == 'regular')
+                            window.location = 'usersregular';
+                        else
+                            window.location = 'usersrepartidor';   
                   }else{
                     window.location = entity;
                   }
                 
               }
             });
+        });
+
+        //Asign to an input hidden elemento to use the value after
+        $('.btnrepmodal').on('click', function(){
+            $('#hiddenasignrep').val($(this).attr('id'));            
+        });
+
+        //Ajax to asing the delivery to the order
+        $('.modalselecrep').on('click', function(){
+           var radioId = $("input[name='repartidor']:checked").val();
+           var orderId = $('#hiddenasignrep').val();
+           alert('valor 1 ' + radioId);
+           alert('valor 2 ' + orderId);
+            $.ajax({
+              type: 'POST',
+              url: '/asignrep/'+orderId+'/'+radioId,
+              success: function(response){
+                    window.location = 'ordersact';             
+              }
+            });
+            
         });
 
         // Pie chart flotPie1

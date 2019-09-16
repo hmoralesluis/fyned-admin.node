@@ -14,7 +14,8 @@ var OrderCartSchema = new Schema({
   created: { type: Date, default: Date.now },
   progreso: {type: Number, default: 0},
   estado: {type: String, default: 'Creada'},
-  atendida: {type: Boolean, default: false}
+  atendida: {type: Boolean, default: false},
+  repartidor: { type: Schema.Types.ObjectId, ref: 'User'},
 });
 
 

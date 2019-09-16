@@ -21,7 +21,8 @@ router.get('/usersadmin', function(req, res, next) {
           if (err) return next(err);
           res.render('users/users', {
             users: users,
-            message: req.flash('users')
+            message: req.flash('users'),
+            label: 'Administradores'
           });
         });
     }
@@ -40,12 +41,33 @@ router.get('/usersregular', function(req, res, next) {
           if (err) return next(err);
           res.render('users/users', {
             users: users,
-            message: req.flash('users')
+            message: req.flash('users'),
+            label: 'Aplicacion'
           });
         });
     }
   });
 });
+
+router.get('/usersrepartidor', function(req, res, next) {
+  if (!req.user) return res.redirect('/login');
+  Rol.findOne({code: 'repartidor'}, function(err, rol){
+    if(err) return next(err);
+    if(rol){
+      User
+        .find({rol: rol._id})
+        .populate('rol')
+        .exec(function(err, users) {
+          if (err) return next(err);
+          res.render('users/users', {
+            users: users,
+            message: req.flash('users'),
+            label: 'Repartidores'
+          });
+        });
+    }
+  });
+})
 
 // router.get('/usersreg', function(req, res, next) {
 //   if (!req.user) return res.redirect('/login');
@@ -127,6 +149,8 @@ router.post('/adduser', function(req, res, next){
                     return res.redirect('/usersadmin');
                   if(rolexist.code == 'regular')
                     return res.redirect('/usersregular');  
+                  if(rolexist.code == 'repartidor')
+                    return res.redirect('/usersrepartidor'); 
                 }
               });
             }
@@ -199,6 +223,8 @@ router.post('/adduser', function(req, res, next){
                     return res.redirect('/usersadmin');
                   if(rolexist.code == 'regular')
                     return res.redirect('/usersregular'); 
+                  if(rolexist.code == 'repartidor')
+                    return res.redirect('/usersrepartidor');
                 });
               });
             });
@@ -254,7 +280,9 @@ router.post('/adduser', function(req, res, next){
                 if(rolexist.code == 'admin')
                   return res.redirect('/usersadmin');
                 if(rolexist.code == 'regular')
-                  return res.redirect('/usersregular')
+                  return res.redirect('/usersregular');
+                if(rolexist.code == 'repartidor')
+                  return res.redirect('/usersrepartidor');  
             });           
           });
         })

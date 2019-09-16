@@ -12,6 +12,7 @@ const expressHbs = require('express-handlebars');
 const passportSocketIo = require("passport.socketio");
 var helpers = require('handlebars-helpers')();
 var notifications = require('./middleware/notifications');
+var rolmiddle = require('./middleware/rol');
 
 const config = require('./config/secret');
 const sessionStore = new MongoStore({ url: config.database, autoReconnect: true });
@@ -47,6 +48,7 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(notifications);
+app.use(rolmiddle);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

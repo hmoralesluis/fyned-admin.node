@@ -9,9 +9,9 @@ router.get('/rol', function(req, res, next){
   rol.code = 'admin';
   rol.name = 'Admin';
 
-  Rol.findOne({code: 'admin'}, function(err, rol){
+  Rol.findOne({code: 'admin'}, function(err, erol){
     if(err) return next(err);
-    if(!rol){
+    if(!erol){
       rol.save(function(err){
         if(err) return next(err);
         res.json({message: 'Rol admin created'});
@@ -30,6 +30,20 @@ router.get('/rol', function(req, res, next){
       rol1.save(function(err){
         if(err) return next(err);
         res.json({message: 'Rol regular created'});
+      });
+    }
+  });
+
+  var rol2 = new Rol();
+  rol2.code = 'repartidor';
+  rol2.name = 'Repartidor';
+
+  Rol.findOne({code: 'repartidor'}, function(err, rol){
+    if(err) return next(err);
+    if(!rol){
+      rol2.save(function(err){
+        if(err) return next(err);
+        res.json({message: 'Rol repartidor created'});
       });
     }
   });
