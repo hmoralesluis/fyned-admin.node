@@ -71,3 +71,6 @@ temp/
 
 #exclude change of css
 views/partials/css.hbs
+
+#exclude the img uploads
+public/images/uploads/

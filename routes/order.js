@@ -5,7 +5,7 @@ const router = require('express').Router();
 const Order = require('../models/ordercart');
 const Rol = require('../models/rol');
 const User = require('../models/user');
-// const Gig = require('../models/gig');
+const Notification = require('../models/notification');
 // const Category = require('../models/category');
 // const Restaurant = require('../models/restaurant');
 // const multer = require('multer');
@@ -51,7 +51,7 @@ router.get('/changestatus/:id', function(req, res, next){
             order.estado = 'Preparando plato';
         }else{
             if(order.progreso == 50){
-                order.estado = 'Plato listo';
+                order.estado = 'Asignado al repartidor';
             }else{
                 if(order.progreso == 75){
                     order.estado = 'En camino';
@@ -79,7 +79,7 @@ router.post('/asignrep/:orderid/:repid', function(req, res, next){
             order.estado = 'Preparando plato';
         }else{
             if(order.progreso == 50){
-                order.estado = 'Plato listo';
+                order.estado = 'Asignado al repartidor';
             }else{
                 if(order.progreso == 75){
                     order.estado = 'En camino';
@@ -93,8 +93,17 @@ router.post('/asignrep/:orderid/:repid', function(req, res, next){
             }
         }
         order.save();
+        let notification = new Notification();
+        notification.owner = req.params.repid;
+        notification.content = 'La orden con # ' + order._id + ' le fue asignada, aceptar y entregar';
+        notification.save();
         res.json({data: 'OK'})
     });
 });
+
+router.get('/redirecttoorders', function(req, res, next){    
+    req.flash('orderate', 'Se notifico al repartidor seleccionado, quien debe dar continuidad al proceso');
+    res.redirect('/ordersact')
+})
 
 module.exports = router;

@@ -82,13 +82,11 @@
         $('.modalselecrep').on('click', function(){
            var radioId = $("input[name='repartidor']:checked").val();
            var orderId = $('#hiddenasignrep').val();
-           alert('valor 1 ' + radioId);
-           alert('valor 2 ' + orderId);
             $.ajax({
               type: 'POST',
               url: '/asignrep/'+orderId+'/'+radioId,
               success: function(response){
-                    window.location = 'ordersact';             
+                    window.location = 'redirecttoorders';             
               }
             });
             
