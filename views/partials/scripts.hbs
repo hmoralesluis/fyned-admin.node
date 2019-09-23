@@ -92,6 +92,26 @@
             
         });
 
+        /**
+        * Function to update the values of the sales on the dashboard
+        */
+        $('#salesMonthSelect').on('change', function(){            
+            var string = $(this).children('option:selected').text();
+            var value = $(this).val();         
+            $('#valuesales').text(value);
+            $('#salesMonth').text(string);
+        });
+
+        /**
+        * Function to update the values of the money earn on the dashboard
+        */
+        $('#earnMonthSelect').on('change', function(){            
+            var string = $(this).children('option:selected').text();
+            var value = $(this).val();         
+            $('#valueearn').text(value);
+            $('#earnMonth').text(string);
+        });
+
         // Pie chart flotPie1
         var piedata = [
             { label: "Desktop visits", data: [[1,32]], color: '#5c6bc0'},
@@ -180,13 +200,12 @@
         });
         // Line Chart  #flotLine5 End
         // Traffic Chart using chartist
-        if ($('#traffic-chart').length) {
+        if ($('#traffic-chart').length) {                       
             var chart = new Chartist.Line('#traffic-chart', {
-              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+              labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
               series: [
-              [0, 18000, 35000,  25000,  22000,  0],
-              [0, 33000, 15000,  20000,  15000,  300],
-              [0, 15000, 28000,  15000,  30000,  5000]
+              
+              [$('#ingresosHidden-1').val(), $('#ingresosHidden-2').val() , $('#ingresosHidden-3').val(), $('#ingresosHidden-4').val(), $('#ingresosHidden-5').val(), $('#ingresosHidden-6').val(), $('#ingresosHidden-7').val(), $('#ingresosHidden-8').val(), $('#ingresosHidden-9').val(), $('#ingresosHidden-10').val(), $('#ingresosHidden-11').val(), $('#ingresosHidden-12').val()]
               ]
           }, {
               low: 0,

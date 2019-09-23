@@ -1,4 +1,7 @@
 <div class="animated fadeIn">
+	{{#each ingresosFechas}}
+		<input type="hidden" id="ingresosHidden-{{@index}}" value="{{this}}">
+	{{/each}}
 		<!-- Widgets  -->
 		<div class="row">
 				<div class="col-lg-3 col-md-6">
@@ -10,14 +13,70 @@
 												</div>
 												<div class="stat-content">
 														<div class="text-left dib">
-																<div class="stat-text">$<span class="count">23569</span></div>
-																<div class="stat-heading">Revenue</div>
+															<div class="pull-left">
+																<div class="stat-text">$ <span class="count" id="valueearn">{{earn}}</span></div>
+																<div class="stat-heading">Ingresos</div>																
+															</div>															
 														</div>
+														<div class="pull-right">
+																<div class="form-group pull-right" style="margin-bottom: 5px">
+																	<div class="input-group">
+																		<select style="width: 1px; max-width: 1px; height: 25px; color: #fff; background-color: #008001" name="category" id="earnMonthSelect" class="form-control" required="">
+																			{{#each ingresosFechas}}																																							
+																				{{#eq @index 0}}
+																					<option value="{{this}}" selected>Total</option>																				
+																				{{/eq}}
+																				{{#eq @index 1}}
+																					<option value="{{this}}">Enero</option>																				
+																				{{/eq}}
+																				{{#eq @index 2}}
+																					<option value="{{this}}">Febrero</option>																				
+																				{{/eq}}
+																				{{#eq @index 3}}
+																					<option value="{{this}}">Marzo</option>																				
+																				{{/eq}}
+																				{{#eq @index 4}}
+																					<option value="{{this}}">Abril</option>																				
+																				{{/eq}}
+																				{{#eq @index 5}}
+																					<option value="{{this}}">Mayo</option>																				
+																				{{/eq}}
+																				{{#eq @index 6}}
+																					<option value="{{this}}">Junio</option>																				
+																				{{/eq}}
+																				{{#eq @index 7}}
+																					<option value="{{this}}">Julio</option>																				
+																				{{/eq}}
+																				{{#eq @index 8}}
+																					<option value="{{this}}">Agosto</option>																				
+																				{{/eq}}
+																				{{#eq @index 9}}
+																					<option value="{{this}}">Septiembre</option>																				
+																				{{/eq}}
+																				{{#eq @index 10}}
+																					<option value="{{this}}">Octubre</option>																				
+																				{{/eq}}
+																				{{#eq @index 11}}
+																					<option value="{{this}}">Noviembre</option>																				
+																				{{/eq}}
+																				{{#eq @index 12}}
+																					<option value="{{this}}">Diciembre</option>																				
+																				{{/eq}}
+																			{{/each}}	
+																		</select>																	
+																	</div>
+																</div>
+																<div style="clear: both"></div>
+																<div>
+																	<div class="stat-heading" id="earnMonth" style="color: #008001">Todas</div>
+																</div>																																
+															</div>
+															
 												</div>
 										</div>
 								</div>
 						</div>
-				</div>
+				</div>				
 
 				<div class="col-lg-3 col-md-6">
 						<div class="card">
@@ -28,9 +87,64 @@
 												</div>
 												<div class="stat-content">
 														<div class="text-left dib">
-																<div class="stat-text"><span class="count">3435</span></div>
-																<div class="stat-heading">Sales</div>
+															<div class="pull-left">
+																<div class="stat-text"><span class="count" id="valuesales">{{ventas}}</span></div>
+																<div class="stat-heading">Ventas</div>
+															</div>
 														</div>
+														<div class="pull-right">
+																<div class="form-group pull-right" style="margin-bottom: 5px">
+																	<div class="input-group">
+																		<select style="width: 1px; max-width: 1px; height: 25px; color: #fff; background-color: #008001" name="category" id="salesMonthSelect" class="form-control" required="">																			
+																			{{#each ventasFecha}}
+																				{{#eq @index 0}}
+																					<option value="{{this}}" selected>Total</option>																				
+																				{{/eq}}
+																				{{#eq @index 1}}
+																					<option value="{{this}}">Enero</option>																				
+																				{{/eq}}
+																				{{#eq @index 2}}
+																					<option value="{{this}}">Febrero</option>																				
+																				{{/eq}}
+																				{{#eq @index 3}}
+																					<option value="{{this}}">Marzo</option>																				
+																				{{/eq}}
+																				{{#eq @index 4}}
+																					<option value="{{this}}">Abril</option>																				
+																				{{/eq}}
+																				{{#eq @index 5}}
+																					<option value="{{this}}">Mayo</option>																				
+																				{{/eq}}
+																				{{#eq @index 6}}
+																					<option value="{{this}}">Junio</option>																				
+																				{{/eq}}
+																				{{#eq @index 7}}
+																					<option value="{{this}}">Julio</option>																				
+																				{{/eq}}
+																				{{#eq @index 8}}
+																					<option value="{{this}}">Agosto</option>																				
+																				{{/eq}}
+																				{{#eq @index 9}}
+																					<option value="{{this}}">Septiembre</option>																				
+																				{{/eq}}
+																				{{#eq @index 10}}
+																					<option value="{{this}}">Octubre</option>																				
+																				{{/eq}}
+																				{{#eq @index 11}}
+																					<option value="{{this}}">Noviembre</option>																				
+																				{{/eq}}
+																				{{#eq @index 12}}
+																					<option value="{{this}}">Diciembre</option>																				
+																				{{/eq}}
+																			{{/each}}				
+																		</select>																	
+																	</div>
+																</div>	
+																<div style="clear: both"></div>																															
+																<div>
+																	<div class="stat-heading" id="salesMonth" style="color: #008001">Todas</div>
+																</div>
+															</div>
 												</div>
 										</div>
 								</div>
@@ -46,8 +160,8 @@
 												</div>
 												<div class="stat-content">
 														<div class="text-left dib">
-																<div class="stat-text"><span class="count">349</span></div>
-																<div class="stat-heading">Gigs</div>
+																<div class="stat-text"><span class="count">{{restaurants}}</span> | <span class="count">{{gigs}}</span></div>
+																<div class="stat-heading">Restaurante-Platos</div>
 														</div>
 												</div>
 										</div>
@@ -64,9 +178,35 @@
 												</div>
 												<div class="stat-content">
 														<div class="text-left dib">
-																<div class="stat-text"><span class="count">2986</span></div>
+															<div class="pull-left">
+																<div class="stat-text" style="min-width: 90px"><span class="count">{{clients}}</span></div>
 																<div class="stat-heading">Clients</div>
+															</div>
 														</div>
+														{{!-- <div class="pull-right" style="margin-left: 10px">
+																<div class="form-group">
+																	<div class="input-group">
+																		<select style="width: 1px; height: 25px" name="category" id="category" class="form-control" required="">
+																			<option value="criolla" selected="">Total</option>
+																			<option value="italiana1" selected="">Enero</option>
+																			<option value="mixto" selected="">Febrero</option>
+																			<option value="indonesa" selected="">Marzo</option>
+																			<option value="indonesa" selected="">Abril</option>
+																			<option value="indonesa" selected="">Mayo</option>
+																			<option value="indonesa" selected="">Junio</option>
+																			<option value="indonesa" selected="">Julio</option>
+																			<option value="indonesa" selected="">Agosto</option>
+																			<option value="indonesa" selected="">Septiembre</option>
+																			<option value="indonesa" selected="">Octubre</option>
+																			<option value="indonesa" selected="">Noviembre</option>
+																			<option value="indonesa" selected="">Diciembre</option>
+																		</select>																	
+																	</div>
+																</div>																																
+															</div>
+															<div class="pull-right" style="margin-top: -27px">
+																<div class="stat-heading">Diciembre</div>
+															</div> --}}
 												</div>
 										</div>
 								</div>
@@ -79,7 +219,7 @@
 				<div class="col-lg-12">
 						<div class="card">
 								<div class="card-body">
-										<h4 class="box-title">Traffic </h4>
+										<h4 class="box-title">Comportamiento de los ingresos</h4>
 								</div>
 								<div class="row">
 										<div class="col-lg-8">

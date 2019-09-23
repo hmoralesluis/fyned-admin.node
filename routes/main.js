@@ -1,18 +1,49 @@
 const router = require('express').Router();
-const async = require('async');
+const Order = require('../models/ordercart');
+// const async = require('async');
 const Gig = require('../models/gig');
+const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
 const Rol = require('../models/rol');
-const Promocode = require('../models/promocode');
-const Notification = require('../models/notification');
+// const Promocode = require('../models/promocode');
+// const Notification = require('../models/notification');
 
 const algoliasearch = require('algoliasearch');
 var client = algoliasearch("L3E3RMHJBU", "f5a7555c009dfcabf7e108808f1ff931");
 var index = client.initIndex('GigSchema');
 
 router.get('/', (req, res, next) => {
-    if (!req.user) return res.redirect('/login'); 
-      res.render('main/home');
+    if (!req.user) return res.redirect('/login');
+    Order
+    .find({atendida: true})    
+    .exec(function(err, orders){
+      if(err) return next(err);
+      let earn = 0;
+      let largo = orders.length;
+      let ventasFechas = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+      let ingresosFechas = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+      for(let i = 0; i < largo; i++){
+        earn += orders[i].total;
+        ventasFechas[orders[i].created.getMonth() + 1]++;
+        ingresosFechas[orders[i].created.getMonth() + 1]+= orders[i].total;
+      }
+      ventasFechas[0] = largo;
+      ingresosFechas[0] = earn;  
+      
+      Gig.find({}, function(err, gigs){
+        if(err) return next(err);
+        Restaurant.find({}, function(err, restaurants){
+          if(err) return next(err);     
+          Rol.findOne({code: 'regular'}, function(err, rol){
+            if(err) return next(err);
+            User.find({rol: rol._id}, function(err, users){
+              if(err) return next(err);
+              res.render('main/home', {earn: earn, ingresosFechas: ingresosFechas, ventas: largo, ventasFecha: ventasFechas, restaurants: restaurants.length, gigs: gigs.length, clients: users.length});
+            });
+          });
+        });
+      });
+    });       
 });
 
 
