@@ -15,7 +15,8 @@ var RestaurantSchema = new Schema({
    label: String,
    description: String,
    enabled: {type: Boolean, default: true},
-
+   latitude: String,
+   longitude: String,
 });
 
 

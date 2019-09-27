@@ -1,3 +1,10 @@
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+    }
+</style>
 <div class="col-lg-6 offset-lg-3">
                     <div class="card">
                         <div class="card-header">Edit Restaurant</div>
@@ -67,6 +74,73 @@
                                   <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture2}}'></div>
                                   <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture3}}'></div>
                                 </div>
+                                <div>
+                                    <input type="hidden" name="ubicacionlat" id="ubicacionlat" value="{{restedit.latitude}}">
+                                    <input type="hidden" name="ubicacionlng" id="ubicacionlng" value="{{restedit.longitude}}">
+                                </div>
+                                <div class="row form-group">
+                                      {{!-- <input type="hidden" name="ubicacionlat" id="ubicacionlat" value="{{restlat}}"> --}}
+                                      {{!-- <input type="hidden" name="ubicacionlng" id="ubicacionlng" value="{{restlng}}"> --}}
+                                      <div class="col-lg-12">
+                                            <p class="text-center">Ubicación del restaurante</p>
+                                            <div id="map"></div>
+                                            <script type="text/javascript">	
+                                                var markers = [];				
+                                                // Initialize and add the map
+                                                function initMap() {
+                                                // The location of Mexico   
+                                                var latitude =  document.getElementById('ubicacionlat').value;
+                                                latitude = latitude == '' ? 19.42847 : parseFloat(latitude);    
+
+                                                var longitude =  document.getElementById('ubicacionlng').value;
+                                                longitude = longitude == '' ? -99.12766 : parseFloat(longitude);                                                                          
+
+                                                var uluru = {lat: latitude, lng: longitude};
+                                                // The map, centered at Uluru
+                                                var map = new google.maps.Map(
+                                                    document.getElementById('map'), {zoom: 4, center: uluru});
+
+                                                google.maps.event.addListener(map, 'click', function(event){
+                                                    document.getElementById('ubicacionlat').value = event.latLng.lat();  
+                                                    document.getElementById('ubicacionlng').value = event.latLng.lng();
+                                                    addMarker(event.latLng, map);
+                                                });
+                                                
+                                                if(latitude != 19.42847 && longitude != -99.12766){
+                                                   var newposition = {lat: latitude, lng: longitude}; 
+                                                   addMarker(newposition, map);
+                                                }
+                                                // The marker, positioned at Uluru
+                                                //var marker = new google.maps.Marker({position: uluru, map: map, animation: google.maps.Animation.DROP});                                               
+
+                                                function addMarker(location, map) {
+                                                    var entre = false;
+                                                    for(var i = 0; i < markers.length; i++){
+                                                        markers[i].setMap(null);
+                                                        entre = true;
+                                                    }
+                                                    if(entre){
+                                                        markers = [];
+                                                    }
+                                                    var marker = new google.maps.Marker({
+                                                        position: location,							
+                                                        map: map,
+                                                        animation: google.maps.Animation.BOUNCE
+                                                    });
+                                                    markers.push(marker);
+                                                    }
+                                                }
+                                            </script>
+                                            <!--Load the API from the specified URL
+                                            * The async attribute allows the browser to render the page while the API loads
+                                            * The key parameter will contain your own API key (which is not needed for this tutorial)
+                                            * The callback parameter executes the initMap() function
+                                            -->
+                                            <script async defer
+                                                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9xndXu6gNfgqDxxEGwuRzUxAT-QqfWXM&callback=initMap">
+                                            </script>
+                                      </div>                                    
+                                </div> 
                                 <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
                             </form>
                         </div>
