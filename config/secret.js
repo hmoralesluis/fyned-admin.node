@@ -6,10 +6,10 @@ module.exports = {
 database: process.env.DATABASE || 'mongodb://localhost/fyned_admin_dev_db_1',
   port: process.env.PORT || 3003,
   secret: process.env.SECRET || 'fiverclone2222',
-  // upload_file: "../../../Front/Fyned.8/public/images/uploads/",
+  // upload_file: "../../../Front/Fyned.9/public/images/uploads/",
   // upload_file_movil: "../../../Movil/foodionic_4/src/assets/img/uploads/",
   upload_file: "../../../fyneddelivery.com/html/public/images/uploads/",
-  upload_file_movil: "../../../mobile.fyneddelivery.com/html/src/assets/img/uploads/",
+  // upload_file_movil: "../../../mobile.fyneddelivery.com/html/src/assets/img/uploads/",
 
 
 }

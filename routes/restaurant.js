@@ -109,15 +109,15 @@ router.post('/addrest', upload.any(), function(req, res, next){
                 
                 const tempPath = req.files[i].path;
                 const targetPath = path.join(__dirname, config.upload_file+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
-                const targetPathMovil = path.join(__dirname, config.upload_file_movil+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
+                // const targetPathMovil = path.join(__dirname, config.upload_file_movil+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
                 const targetLocal = path.join(__dirname, "../public/images/uploads/restaurant/"+restaurant._id+"_"+(i+1)+".jpg"); 
             
                 fs.copyFile(tempPath, targetPath, function(err){
                   if(err) return next(err);
                 });
-                fs.copyFile(tempPath, targetPathMovil, function(err){
-                  if(err) return next(err);
-                });  
+                // fs.copyFile(tempPath, targetPathMovil, function(err){
+                //   if(err) return next(err);
+                // });  
                 fs.copyFile(tempPath, targetLocal, function(err){
                   if(err) return next(err);
                 });
@@ -156,9 +156,8 @@ router.get('/editrest/:id', function(req, res, next){
 
 router.post('/editrest/:id', upload.any(), function(req, res, next){
   if (!req.user) return res.redirect('/login');
-
   console.log('el valor es ' + req.body.ubicacionlat + ' otro ' + req.body.ubicacionlng + ' ademas ' + req.body.description);
-  // return res.redirect('/editrest/'+ req.params.id);
+  
   
 
     Restaurant.findOne({ name : req.body.name}).exec(function(err, restaurant){
@@ -171,21 +170,20 @@ router.post('/editrest/:id', upload.any(), function(req, res, next){
           return res.redirect('/editrest/'+ req.params.id);
         }
       }
-
+      
       Category.findOne({code: req.body.category}, function(err, categoryexist){
-        if(err) return next(err);
-        if(categoryexist){
+        if(err) return next(err);        
+        if(categoryexist){          
           Restaurant.findOne({ _id : req.params.id}, function(err, restexist){
-            if(err) return next(err);
+            if(err) return next(err);            
             restexist.name = req.body.name;
             restexist.category = categoryexist._id;
             restexist.direction = req.body.dir;
             restexist.estado = req.body.estado;
-            restexist.label = req.body.label;         
-            restaurant.description = 'hamlet';   
-            // restaurant.description = req.body.description;
-            // restaurant.latitude = req.body.ubicacionlat;
-            // restaurant.longitude = req.body.ubicacionlng;
+            restexist.label = req.body.label;
+            restexist.description = req.body.description;
+            restexist.latitude = req.body.ubicacionlat;
+            restexist.longitude = req.body.ubicacionlng;
             if(req.files.length > 0){
     
               if(req.files.length > 3){
@@ -203,29 +201,29 @@ router.post('/editrest/:id', upload.any(), function(req, res, next){
                 }else{
                   const tempPath = req.files[i].path;
                   const targetPath = path.join(__dirname, config.upload_file+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
-                  const targetPathMovil = path.join(__dirname, config.upload_file_movil+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
+                  // const targetPathMovil = path.join(__dirname, config.upload_file_movil+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
                   const targetLocal = path.join(__dirname, "../public/images/uploads/restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
       
                   fs.copyFile(tempPath, targetPath, function(err){
                     if(err) return next(err);
                   });
-                  fs.copyFile(tempPath, targetPathMovil, function(err){
-                    if(err) return next(err);
-                  });  
+                  // fs.copyFile(tempPath, targetPathMovil, function(err){
+                  //   if(err) return next(err);
+                  // });  
                   fs.copyFile(tempPath, targetLocal, function(err){
                     if(err) return next(err);
                   });
                   
                   if(i == 0) {
-                    restaurant.picture1 = restaurant._id+"_1.jpg";
+                    restexist.picture1 = restexist._id+"_1.jpg";
                   }if(i == 1) {
-                    restaurant.picture2 = restaurant._id+"_2.jpg";
+                    restexist.picture2 = restexist._id+"_2.jpg";
                   }if(i == 2) {
-                    restaurant.picture3 = restaurant._id+"_3.jpg";
+                    restexist.picture3 = restexist._id+"_3.jpg";
                   } 
                 }    
               }    
-            }    
+            }                
             restexist.save(function(err){
               if(err) return next(err);
               req.flash('restaurants', 'The restaurant have been updated');
