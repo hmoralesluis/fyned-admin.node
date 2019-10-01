@@ -64,15 +64,15 @@
                               </div>
 
                                 <div class="row form-group">
-                                    <div class="col col-md-3"><label for="picture" class=" form-control-label">Picture</label></div>
-                                    <div class="col-12 col-md-6"><input type="file" id="picture" name="picture" class="form-control-file"></div>
+                                    <div class="col col-md-3"><label for="picture" class=" form-control-label">Pictures (3 Max)</label></div>
+                                    <div class="col-12 col-md-6"><input type="file" id="picture" name="picture" class="form-control-file" multiple></div>
                                 </div>
                                 <hr>
                                 <div class="row form-group">
-                                  <div class="col col-md-3">Current Picture</div>
+                                  <div class="col col-md-3">Current Pictures</div>
                                   <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture1}}'></div>
-                                  {{!-- <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture2}}'></div> --}}
-                                  {{!-- <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture3}}'></div> --}}
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture2}}'></div>
+                                  <div class="col col-md-3"><img style="width: 80px; height: 80px" src='images/uploads/restaurant/{{restedit.picture3}}'></div>
                                 </div>
                                 <div>
                                     <input type="hidden" name="ubicacionlat" id="ubicacionlat" value="{{restedit.latitude}}">
