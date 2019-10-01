@@ -118,15 +118,15 @@ if (!req.user) return res.redirect('/login');
                 }else{
                   const tempPath = req.files[i].path;
                   const targetPath = path.join(__dirname, config.upload_file+"gig/"+gig._id+"_"+(i+1)+".jpg");
-                  const targetPathMovil = path.join(__dirname, config.upload_file_movil+"gig/"+gig._id+"_"+(i+1)+".jpg");
+                  // const targetPathMovil = path.join(__dirname, config.upload_file_movil+"gig/"+gig._id+"_"+(i+1)+".jpg");
                   const targetLocal = path.join(__dirname, "../public/images/uploads/gig/"+gig._id+"_"+(i+1)+".jpg");
   
                   fs.copyFile(tempPath, targetPath, function(err){
                     if(err) return next(err);
                   });
-                  fs.copyFile(tempPath, targetPathMovil, function(err){
-                    if(err) return next(err);
-                  });  
+                  // fs.copyFile(tempPath, targetPathMovil, function(err){
+                  //   if(err) return next(err);
+                  // });  
                   fs.copyFile(tempPath, targetLocal, function(err){
                     if(err) return next(err);
                   });
@@ -211,25 +211,25 @@ router.post('/editgig/:id', upload.any(), function(req, res, next){
                 }else{
                   const tempPath = req.files[i].path;
                   const targetPath = path.join(__dirname, config.upload_file+"gig/"+gig._id+"_"+(i+1)+".jpg");
-                  const targetPathMovil = path.join(__dirname, config.upload_file_movil+"gig/"+gig._id+"_"+(i+1)+".jpg");
+                  // const targetPathMovil = path.join(__dirname, config.upload_file_movil+"gig/"+gig._id+"_"+(i+1)+".jpg");
                   const targetLocal = path.join(__dirname, "../public/images/uploads/gig/"+gig._id+"_"+(i+1)+".jpg");
   
                   fs.copyFile(tempPath, targetPath, function(err){
                     if(err) return next(err);
                   });
-                  fs.copyFile(tempPath, targetPathMovil, function(err){
-                    if(err) return next(err);
-                  });  
+                  // fs.copyFile(tempPath, targetPathMovil, function(err){
+                  //   if(err) return next(err);
+                  // });  
                   fs.copyFile(tempPath, targetLocal, function(err){
                     if(err) return next(err);
                   });
   
                   if(i == 0) {
-                    gig.picture1 = gig._id+"_1.jpg";
+                    gigexist.picture1 = gig._id+"_1.jpg";
                   }if(i == 1) {
-                    gig.picture2 = gig._id+"_2.jpg";
+                    gigexist.picture2 = gig._id+"_2.jpg";
                   }if(i == 2) {
-                    gig.picture3 = gig._id+"_3.jpg";
+                    gigexist.picture3 = gig._id+"_3.jpg";
                   } 
                 }
               }
