@@ -156,10 +156,6 @@ router.get('/editrest/:id', function(req, res, next){
 
 router.post('/editrest/:id', upload.any(), function(req, res, next){
   if (!req.user) return res.redirect('/login');
-  console.log('el valor es ' + req.body.ubicacionlat + ' otro ' + req.body.ubicacionlng + ' ademas ' + req.body.description);
-  
-  
-
     Restaurant.findOne({ name : req.body.name}).exec(function(err, restaurant){
       if(err) return next(err);
 
@@ -200,9 +196,11 @@ router.post('/editrest/:id', upload.any(), function(req, res, next){
                   return res.redirect('/editrest/'+ req.params.id);
                 }else{
                   const tempPath = req.files[i].path;
-                  const targetPath = path.join(__dirname, config.upload_file+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
+                  const targetPath = path.join(__dirname, config.upload_file+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");                  
                   // const targetPathMovil = path.join(__dirname, config.upload_file_movil+"restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
                   const targetLocal = path.join(__dirname, "../public/images/uploads/restaurant/"+restaurant._id+"_"+(i+1)+".jpg");
+
+                  console.log('el camino es ' + targetLocal);
       
                   fs.copyFile(tempPath, targetPath, function(err){
                     if(err) return next(err);
