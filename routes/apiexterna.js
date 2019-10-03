@@ -9,6 +9,7 @@ const LovedRestaurant = require('../models/lovedrestaurant');
 const LovedGig = require('../models/lovedgig');
 const Rol = require('../models/rol');
 const Notification = require('../models/notification');
+const Configuration =  require('../models/configuration');
 
 
 router.post('/apitest', function(req, res, next){
@@ -533,5 +534,21 @@ router.get('/apidelgigtocartgig/:iduser/:item', function(req, res, next){
 });
 
 // End Loved Gig
+
+
+/*--- Start configuration --*/
+
+router.get('/apigetdistance', function(req, res, next){
+  Configuration.findOne({}, function(err, configuration){
+      if(err) return next(err);
+      if(configuration){
+        res.json({distance: configuration.distance});
+      }else{
+        res.json({message: 'no'});
+      }
+  });
+});
+
+/*--- End configuration --*/
 
 module.exports = router;

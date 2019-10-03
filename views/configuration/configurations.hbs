@@ -1,0 +1,40 @@
+{{#if message}}
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+              {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+  {{/if}}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Configuración</strong>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                    <h4 class="box-title">Distancia de aceptacion de pedidos (KM):</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">                        
+                        <form method="POST" action="/congiguration_distance">                            
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="number" id="distance" name="distance" placeholder="Distancia" class="form-control" value="{{configuration.distance}}" required>
+                                        <div class="input-group-addon"><i class="fa fa-arrows-h"></i></div>
+                                    </div>
+                                </div>                            
+                            <div class="form-actions form-group text-right"><button type="submit" class="btn btn-success btn-sm">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>										
+</div>    

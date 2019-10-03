@@ -103,6 +103,7 @@ const apiRoutes = require('./api/api');
 const restaurantRoutes = require('./routes/restaurant');
 const gigRoutes = require('./routes/gig');
 const apiexternaRoutes = require('./routes/apiexterna');
+const configuration = require('./routes/configuration');
 
 app.use(mainRoutes);
 app.use(userRoutes);
@@ -111,6 +112,7 @@ app.use(orderRoutes);
 app.use(restaurantRoutes);
 app.use(gigRoutes);
 app.use(apiexternaRoutes);
+app.use(configuration);
 app.use('/api', apiRoutes);
 
 http.listen(config.port, (err) => {
