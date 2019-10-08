@@ -12,11 +12,15 @@ const Notification = require('../models/notification');
 const Configuration =  require('../models/configuration');
 
 
-router.post('/apitest', function(req, res, next){
-  console.log('el valor es ' + req.body.todo);
-  res.json({message: 'ok '});
-});
+// router.post('/apitest', function(req, res, next){
+//   console.log('el valor es ' + req.body.todo);
+//   res.json({message: 'ok '});
+// });
 
+/**
+ * Function to create a new notification for the admin users
+ * @param {string} message 
+ */
 function createNotification(message) {
   Rol.findOne({code: 'admin'}, function(err, roladmin){
     if(err) return next(err);
@@ -34,7 +38,13 @@ function createNotification(message) {
   });
 }
 
-// begin Datos de usuarios
+//----------- Users section -----------------//
+
+  /**
+   * Function to check if an user exist
+   * Params :email
+   * method: get
+   */
   router.get('/apiuserbyemail/:email', function(req, res, next){
     const email = req.params.email;
     User.findOne({email: email}, function(err, userexist){
@@ -46,28 +56,44 @@ function createNotification(message) {
     });
   });
 
+  /**
+   * Function to add an user 
+   * Params name, email, pass
+   * method: post
+   */
+  router.post('/adduserexterno', function(req, res, next){
+    let name = req.body.name;
+    let email = req.body.email;
+    let pass = req.body.pass;
 
-  router.get('/adduserexterno/:name/:email/:pass', function(req, res, next){
     Rol.findOne({code: 'regular'}, function(err, rol){
       if(err) return next(err);
       var user = new User();
-      user.username = req.params.name;
-      user.email = req.params.email;
-      user.password = req.params.pass;  
+      user.username = name;
+      user.email = email;
+      user.password = pass;  
       user.rol = rol.id;  
       user.save();
       //Create the notifications related to this topic for the admin users.
       createNotification('Se registro un nuevo usuario');
       res.json({res: user._id});            
     });
+
   });
 
+  /**
+   * Function to check is an user can have the login
+   * Params email, pass
+   * method: post
+   */
 
-  router.get('/apicanlogintheuser/:email/:pass', function(req, res, next){
-    User.findOne({email: req.params.email}, function(err, user){
+  router.post('/apicanlogintheuser', function(req, res, next){
+    let email = req.body.email;
+    let pass = req.body.pass;
+    User.findOne({email: email}, function(err, user){
       if(err) return next(err);
       if(user){
-        if(user.comparePassword(req.params.pass))
+        if(user.comparePassword(pass))
           res.json({res: user._id});
         else
           res.json({res: false});  
@@ -77,10 +103,14 @@ function createNotification(message) {
     });
   });
 
-// end Datos de usuarios
+//----- end user section ----------//
 
+//--------- Begin gig section ------//
 
-
+/**
+ * Function to get all the enabled gigs
+ * method: get
+ */
 router.get('/apigigs', function(req, res, next) {
   Gig
     .find({enabled: true})
@@ -90,6 +120,12 @@ router.get('/apigigs', function(req, res, next) {
       res.json({gigs: gigs});
     });
 });
+
+/**
+ * Function to get a gig
+ * params Id
+ * method: get
+ */
 
 router.get('/apigig/:id', function(req, res, next) {
   Gig
@@ -101,6 +137,10 @@ router.get('/apigig/:id', function(req, res, next) {
     });
 });
 
+/**
+ * Function to get all the gigs with the suggestion actived
+ * method: get
+ */
 
 router.get('/apigigssugerencia', function(req, res, next) {
   Gig
@@ -111,6 +151,12 @@ router.get('/apigigssugerencia', function(req, res, next) {
       res.json({gigs: gigs});
     });
 });
+
+/**
+ * function to get all the gigs from the same restaurnt
+ * Params gigId
+ * Method get
+ */
 
 router.get('/apigigfromthesamerest/:id', function(req, res, next) {
   Gig
@@ -125,6 +171,15 @@ router.get('/apigigfromthesamerest/:id', function(req, res, next) {
     });
 });
 
+//----------- end gig section ---------//
+
+//---------Begin categories section ------//
+
+/**
+ * Function to get all the categories from the restaurants
+ * method: get
+ */
+
 router.get('/apicategories', function(req, res, next) {
   Category
     .find()
@@ -134,20 +189,30 @@ router.get('/apicategories', function(req, res, next) {
       res.json({categories: categories});
     });
 });
+/**
+ * Function to get an category
+ * params: Category ID
+ * method: get
+ */
 router.get('/apicategory/:id', function(req, res, next) {
   Category
-    .findById({_id: req.params.id})
-    // .populate('owner')
+    .findById({_id: req.params.id})    
     .exec(function(err, category) {
       if (err) return next(err);
       res.json({category: category});
     });
 });
 
+//-------End category section --------//
 
 
+//----------------Begin restaurant section -------///
+
+/**
+ * Function to get all the restaurants
+ * method: get
+ */
 router.get('/apirestaurants', function(req, res, next) {
-
   Restaurant
     .find({enabled: true})
     .exec(function(err, restaurants) {
@@ -156,39 +221,52 @@ router.get('/apirestaurants', function(req, res, next) {
     });
 });
 
-router.get('/apirestaurantandgigs/:id', function(req, res, next) {
+/**
+ * Function to get a restaurant and the asociated gigs
+ * Params: Rest Id
+ * Method: get
+ */
 
+router.get('/apirestaurantandgigs/:id', function(req, res, next) {
   Restaurant
     .findOne({enabled: true, _id : req.params.id})
     .exec(function(err, restaurant) {
       if (err) return next(err);
       Gig.find({enabled: true, restaurant: req.params.id}, function(err, gigs){
         res.json({restaurant: restaurant, gigs: gigs});
-        // console.log(restaurant);
       });
     });
 });
 
+//-------------------End restaurant section -----------------//
 
-// Begin Cart
+
+//---------- Begin cart section -------------//
+
+/**
+ * Function to create a cart 
+ * Params user Id
+ * Method get
+ */
 router.get('/apicreatecart/:iduser', function(req, res, next){
-
   var cart = new Cart();
   cart.owner = req.params.iduser;
   cart.save(function(err){
     if(err) return next(err);
     res.json({message: 'ok'});
   });
-
 });
 
+/**
+ * Function to add a gig to a cart
+ * Params user Id, Gig Id and Quantity
+ * Method: Get
+ */
 router.get('/apiaddgigtocart/:iduser/:idgig/:quantity', function(req, res, next){
 
   const iduser =  req.params.iduser;
   const idgig =  req.params.idgig;
   const quantity =  req.params.quantity;
-
-  // res.json({message: 'ok'});
 
   Cart.findOne({ owner: iduser }, function(err, cart) {
     if(err) return next(err);
@@ -203,7 +281,6 @@ router.get('/apiaddgigtocart/:iduser/:idgig/:quantity', function(req, res, next)
       });
 
       cart.total = cart.total + (gig.price * quantity);
-      // console.log('el valor es ' +cart.total);
       cart.save(function(err) {
         if (err) return next(err);
         res.json({message: 'ok', itemid: cart.items[0]._id});
