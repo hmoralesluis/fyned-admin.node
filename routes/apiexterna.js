@@ -541,10 +541,10 @@ router.get('/apidelgigtocartgig/:iduser/:item', function(req, res, next){
 router.get('/apigetdistance', function(req, res, next){
   Configuration.findOne({}, function(err, configuration){
       if(err) return next(err);
-      if(configuration){
-        res.json({distance: configuration.distance});
+      if(configuration){        
+        res.json({distance: configuration.distance, message: 'si'});
       }else{
-        res.json({message: 'no'});
+        res.json({distance: 0, message: 'no'});
       }
   });
 });
